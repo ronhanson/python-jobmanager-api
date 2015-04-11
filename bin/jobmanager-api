@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# vim: ai ts=4 sts=4 et sw=4 nu
+"""
+(c) 2014 Ronan Delacroix
+Job Manager Utility - Main File
+:author: Ronan Delacroix
+"""
+import pdb
+pdb.set_trace()
+import os
+import sys
+import six
+import argparse
+import jobmanager.api
+import mongoengine
+
+
+
+import tbx
+tbx.log.configure_logging_to_screen()
+
+
+def main():
+    parser = argparse.ArgumentParser(description="""Job Manager Command Launcher""", epilog='"Be strong, be good. But have a glass of wine first."')
+    #parser.add_argument('files', metavar='<FILE>', type=argparse.FileType('r'), nargs='+',
+    #                    help='A WWM XML movie file to process.')
+    args = parser.parse_args()
+
+
+    mongoengine.connect('jobmanager8')
+
+    jobmanager.api.run_api()
+
+    exit(0)
+
+if __name__ == "__main__":
+    main()
