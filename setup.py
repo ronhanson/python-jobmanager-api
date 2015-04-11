@@ -16,7 +16,7 @@ setup(
     url='https://github.com/ronhanson/python-jobmanager-api',
     packages=find_packages(where='.', exclude=["fabfile", "tools", "*.tests", "*.tests.*", "tests.*", "tests"]),
     package_data={}, #{'mypkg': ['data/*.dat']},
-    scripts=[],
+    scripts=['bin/jobmanager-api'],
     license=open('LICENCE.txt').read().strip(),
     description='Job Manager API',
     long_description=open('README.md').read().strip(),
