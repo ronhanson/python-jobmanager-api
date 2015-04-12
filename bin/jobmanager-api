@@ -6,31 +6,26 @@
 Job Manager Utility - Main File
 :author: Ronan Delacroix
 """
-import pdb
-pdb.set_trace()
 import os
 import sys
 import six
 import argparse
 import jobmanager.api
 import mongoengine
-
-
-
 import tbx
-tbx.log.configure_logging_to_screen()
+import tbx.log
+import tbx.settings
+
+
+
+settings = tbx.settings.from_file('api', application_name='jobmanager')
+tbx.log.configure_logging("jobmanager-api", application_name='jobmanager', settings=settings.LOG)
 
 
 def main():
-    parser = argparse.ArgumentParser(description="""Job Manager Command Launcher""", epilog='"Be strong, be good. But have a glass of wine first."')
-    #parser.add_argument('files', metavar='<FILE>', type=argparse.FileType('r'), nargs='+',
-    #                    help='A WWM XML movie file to process.')
-    args = parser.parse_args()
+    mongoengine.connect(host=settings.DATABASE.HOST, port=settings.DATABASE.PORT, db=settings.DATABASE.NAME )
 
-
-    mongoengine.connect('jobmanager8')
-
-    jobmanager.api.run_api()
+    jobmanager.api.run_api(host=settings.WEB.HOST, port=settings.WEB.PORT, debug=settings.WEB.DEBUG)
 
     exit(0)
 
