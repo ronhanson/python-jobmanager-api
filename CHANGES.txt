@@ -3,3 +3,4 @@
 2015-04-12	--	v0.1.1	-- Added script
 2015-04-12	--	v0.2.0	-- Misc
 2015-04-12	--	v0.2.1	-- Install script
+2015-04-12	--	v0.2.2	-- Updated install
