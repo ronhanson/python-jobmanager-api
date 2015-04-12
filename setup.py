@@ -18,7 +18,7 @@ setup(
     package_data={}, #{'mypkg': ['data/*.dat']},
     scripts=['bin/jobmanager-api'],
     data_files=[
-        ('/etc/jobmanager', ['api.ini', 'api.spec']),
+        ('/etc/jobmanager', ['bin/api.ini', 'bin/api.spec']),
         ('/var/log/jobmanager', [])
     ],
     license=open('LICENCE.txt').read().strip(),
