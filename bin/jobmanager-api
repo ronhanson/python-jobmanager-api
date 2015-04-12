@@ -17,7 +17,6 @@ import tbx.log
 import tbx.settings
 
 
-
 settings = tbx.settings.from_file('api', application_name='jobmanager')
 tbx.log.configure_logging("jobmanager-api", application_name='jobmanager', settings=settings.LOG)
 
