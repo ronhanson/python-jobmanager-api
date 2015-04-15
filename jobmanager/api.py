@@ -163,13 +163,5 @@ def page_not_found(e):
 def run_api(host='0.0.0.0', port=5000, debug=False):
 
     register_api(JobAPI, 'job_api', '/job/', pk='uuid')
-    while True:
-        try:
-            app.run(host=host, port=port, debug=debug)
-        except KeyboardInterrupt:
-            logging.info('Keyboard Interrupt. Exiting.')
-            exit(0)
-        except Exception as e:
-            logging.error('Critical error in main loop.')
-            logging.exception(e)
+    app.run(host=host, port=port, debug=debug)
 
