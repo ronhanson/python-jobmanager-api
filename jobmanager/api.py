@@ -93,13 +93,13 @@ class JobAPI(MethodView):
         else:
             lim = int(request.args.get('limit', 10))
             off = int(request.args.get('offset', 0))
-            return Job.objects[off:lim]
+            return Job.objects.order_by('-created')[off:lim]
 
     def post(self):
         data = request.data.decode('UTF-8')
         data = json.loads(data)
         job_type = data.pop('type', None)
-        module = data.get('module', None)
+        module = data.pop('module', None)
         if not type:
             raise Exception("Job has no 'type' field or is not set (value='%s')." % type)
         cls = find_job_type(job_type, module=module)
