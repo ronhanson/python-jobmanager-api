@@ -16,6 +16,7 @@ from jobmanager.common.job import Job
 import tbx
 import tbx.text
 import logging
+import traceback
 
 # Flask
 app = Flask(__name__)
@@ -40,6 +41,8 @@ def serialize(func):
                 'data': request.data.decode('UTF-8'),
                 'values': request.values
             }
+            logging.error("An error happened while receiving the query "+repr(e))
+            logging.error("Stack: "+traceback.format_exc(e))
 
         return Response(tbx.text.render_dict_from_mimetype(result, mimetype), status=code, mimetype=mimetype)
     return wrapper
@@ -96,6 +99,7 @@ class JobAPI(MethodView):
             return Job.objects.order_by('-created')[off:lim]
 
     def post(self):
+        logging.debug("Post on")
         data = request.data.decode('UTF-8')
         data = json.loads(data)
         job_type = data.pop('type', None)
