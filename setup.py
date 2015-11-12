@@ -25,7 +25,7 @@ setup(
     description='Job Manager API',
     long_description=open('README.md').read().strip(),
     include_package_data=True,
-    install_requires=requirements,
+    setup_requires=requirements,
     classifiers=[
         'Topic :: Utilities',
         'Topic :: Software Development :: Libraries',
