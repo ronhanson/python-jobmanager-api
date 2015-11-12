@@ -8,3 +8,4 @@
 2015-04-15	--	v0.2.4	-- Misc changes
 2015-07-15	--	v0.3.0	-- Added python packages to config file in order to import the right jobs classes and be able to list/create it.
 2015-11-12	--	v0.3.1-stable	-- minor changes
+2015-11-12	--	v0.3.1a-stable	-- build tools update
