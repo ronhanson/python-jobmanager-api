@@ -10,3 +10,4 @@
 2015-11-12	--	v0.3.1-stable	-- minor changes
 2015-11-12	--	v0.3.1a-stable	-- build tools update
 2015-11-13	--	v0.3.2-stable	-- small fixes for packaging
+2015-11-13	--	v0.3.3-stable	-- Updated setup.py to avoid __init__.py while packaging.
