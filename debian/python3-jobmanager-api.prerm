@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+/etc/init.d/jobmanager-api stop
+update-rc.d -f jobmanager-api remove

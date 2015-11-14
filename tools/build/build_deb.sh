@@ -14,8 +14,8 @@ python3 setup.py --command-packages=stdeb.command sdist_dsc -i --with-python2=Tr
 echo ""
 echo "Copying post install script..."
 echo ""
-#cp -Rv debian/* deb_dist/*/debian/
-#chmod +x deb_dist/*/debian/*postinst
+cp -Rv debian/* deb_dist/*/debian/
+chmod +x deb_dist/*/debian/*postinst
 
 echo ""
 echo "Rebuilding package with postinst script..."

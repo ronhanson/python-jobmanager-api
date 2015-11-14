@@ -14,7 +14,7 @@ setup(
     author='Ronan Delacroix',
     author_email='ronan.delacroix@gmail.com',
     url='https://github.com/ronhanson/python-jobmanager-api',
-    packages=find_packages(where='.', exclude=["fabfile", "tools", "*.tests", "*.tests.*", "tests.*", "tests"]) + ['jobmanager'], # + find_packages(where='jobmanager', exclude=["fabfile", "tools", "*.tests", "*.tests.*", "tests.*", "tests"]),
+    packages=find_packages(where='.', exclude=["fabfile", "tools", "*.tests", "*.tests.*", "tests.*", "tests"]) + ['jobmanager'],
     package_data={ 'jobmanager': ['jobmanager/*.py'] }, #{'mypkg': ['data/*.dat']},
     scripts=['bin/jobmanager-api'],
     data_files=[
