@@ -17,3 +17,4 @@
 2015-11-16	--	v0.4.2-stable	-- Misc fixes
 2015-11-16	--	v0.4.3-stable	-- fix
 2015-11-16	--	v0.4.4-stable	-- fix
+2015-11-16	--	v0.4.4a-stable	-- config fix
