@@ -15,3 +15,4 @@
 2015-11-14	--	v0.4.0a-stable	-- removed useless file
 2015-11-16	--	v0.4.1-stable	-- init script update
 2015-11-16	--	v0.4.2-stable	-- Misc fixes
+2015-11-16	--	v0.4.3-stable	-- fix
