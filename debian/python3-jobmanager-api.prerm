@@ -6,6 +6,6 @@ case "$1" in
         /etc/init.d/jobmanager-api stop
 
         # Remove the service init script
-        update-rc.d jobmanager-api remove
+        update-rc.d -f jobmanager-api remove
     ;;
 esac
