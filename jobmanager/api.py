@@ -110,6 +110,8 @@ class JobAPI(MethodView):
 
         new_job = cls.from_json(tbx.text.render_json(data))
         new_job.save()
+        logging.info("New Job created")
+        logging.info(new_job)
         return new_job
 
     def delete(self, uuid):

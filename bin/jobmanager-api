@@ -27,6 +27,9 @@ def import_from_name(module_name):
 
 
 def main():
+    log = logging.getLogger('werkzeug')
+    log.setLevel(logging.ERROR)
+    
     mongoengine.connect(host=settings.DATABASE.HOST, port=settings.DATABASE.PORT, db=settings.DATABASE.NAME)
 
     for mod in settings.JOBS.MODULES:
