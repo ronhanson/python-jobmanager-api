@@ -49,19 +49,26 @@ case "$1" in
         db_fset jobmanager-api/webport seen false
         db_input high jobmanager-api/webport
         db_go
+
+        db_fset jobmanager-api/modules seen false
+        db_input high jobmanager-api/modules
+        db_go
         
         # Now configure the ini file using answers...
         db_get jobmanager-api/dbhost
         sed -i -e "/^\[DATABASE\]/,/^\[.*\]/ s|^\([ \t]*HOST[ \t]*=[ \t]*\).*$|\1\"${RET}\"|" ${JM_CONF}
 
         db_get jobmanager-api/dbport
-        sed -i -e "/^\[DATABASE\]/,/^\[.*\]/ s|^\([ \t]*PORT[ \t]*=[ \t]*\).*$|\1\"${RET}\"|" ${JM_CONF}
+        sed -i -e "/^\[DATABASE\]/,/^\[.*\]/ s|^\([ \t]*PORT[ \t]*=[ \t]*\).*$|\1${RET}|" ${JM_CONF}
 
         db_get jobmanager-api/dbname
         sed -i -e "/^\[DATABASE\]/,/^\[.*\]/ s|^\([ \t]*NAME[ \t]*=[ \t]*\).*$|\1\"${RET}\"|" ${JM_CONF}
 
         db_get jobmanager-api/webport
-        sed -i -e "/^\[WEB\]/,/^\[.*\]/ s|^\([ \t]*PORT[ \t]*=[ \t]*\).*$|\1\"${RET}\"|" ${JM_CONF}
+        sed -i -e "/^\[WEB\]/,/^\[.*\]/ s|^\([ \t]*PORT[ \t]*=[ \t]*\).*$|\1${RET}|" ${JM_CONF}
+
+        db_get jobmanager-api/modules
+        sed -i -e "/^\[JOBS\]/,/^\[.*\]/ s|^\([ \t]*MODULES[ \t]*=[ \t]*\).*$|\1${RET}|" ${JM_CONF}
 
         # Finished with DebConf database...
         db_stop
@@ -69,6 +76,7 @@ case "$1" in
         # Add service to startup and start it...
         update-rc.d jobmanager-api defaults
         /etc/init.d/jobmanager-api start
+    ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
     ;;

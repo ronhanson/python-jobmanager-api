@@ -13,7 +13,7 @@ Description:
  Please enter the Job-Manager database port number.
  .
  Default port for MongoDB is 27017.
- 
+
 Template: jobmanager-api/dbname
 Type: string
 Default: cinecardz
@@ -27,3 +27,12 @@ Description:
  Please enter the Job-Manager API listening port.
  .
  Default port is 5000
+
+Template: jobmanager-api/modules
+Type: string
+Description:
+ Please enter the modules the Job-Manager should import.
+ .
+ For example: "mypackage.mymodule1","mypackage.mymodule2",
+ .
+ Default value is empty.
