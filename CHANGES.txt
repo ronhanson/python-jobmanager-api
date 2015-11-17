@@ -18,3 +18,4 @@
 2015-11-16	--	v0.4.3-stable	-- fix
 2015-11-16	--	v0.4.4-stable	-- fix
 2015-11-16	--	v0.4.4a-stable	-- config fix
+2015-11-17	--	v0.4.5-stable	-- Debcong tests

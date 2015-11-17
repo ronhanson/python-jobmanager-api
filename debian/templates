@@ -1,0 +1,29 @@
+Template: jobmanager-api/dbhost
+Type: string
+Default: job-database.prod.ccz
+Description:
+ Please enter the Job-Manager database server name.
+ .
+ This database is the MongoDB containing jobs.
+
+Template: jobmanager-api/dbport
+Type: string
+Default: 27017
+Description:
+ Please enter the Job-Manager database port number.
+ .
+ Default port for MongoDB is 27017.
+ 
+Template: jobmanager-api/dbname
+Type: string
+Default: cinecardz
+Description:
+ Please enter the Job-Manager database name.
+
+Template: jobmanager-api/webport
+Type: string
+Default: 5000
+Description:
+ Please enter the Job-Manager API listening port.
+ .
+ Default port is 5000

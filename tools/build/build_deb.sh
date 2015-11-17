@@ -16,6 +16,8 @@ echo "Copying post install script..."
 echo ""
 cp -Rv debian/* deb_dist/*/debian/
 chmod +x deb_dist/*/debian/*postinst
+chmod +x deb_dist/*/debian/*postrm
+chmod +x deb_dist/*/debian/*prerm
 
 echo ""
 echo "Rebuilding package with postinst script..."
