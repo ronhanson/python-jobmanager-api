@@ -20,3 +20,4 @@
 2015-11-16	--	v0.4.4a-stable	-- config fix
 2015-11-17	--	v0.4.5-stable	-- Debcong tests
 2015-11-17	--	v0.5.0-stable	-- Debconf now setup for deb installation
+2015-11-19	--	v0.5.0a-stable	-- fix
