@@ -1,8 +1,8 @@
 tbx
--e git+git@github.com:ronhanson/python-jobmanager-common.git#egg=jobmanager-common
+jobmanager-common >= 0.5
 six >= 1.8.0
-pymongo < 3.0
-mongoengine
+pymongo < 3.0 
+mongoengine >= 0.10.6
 flask
 requests
 

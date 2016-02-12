@@ -12,11 +12,12 @@ import json
 from flask.views import MethodView
 import mongoengine.base.common
 import mongoengine.errors
-from jobmanager.common.job import Job
+from jobmanager.common.job import SerializableQuerySet, BaseDocument, Job, Client, ClientStatus
 import tbx
 import tbx.text
 import logging
 import traceback
+from datetime import datetime, timedelta
 
 # Flask
 app = Flask(__name__)
@@ -29,7 +30,12 @@ def serialize(func):
         result = {}
         code = 200
         try:
-            result = func(*args, **kwargs).to_safe_dict()
+            result = func(*args, **kwargs)
+            if isinstance(result, BaseDocument):
+                result = result.to_safe_dict()
+            if isinstance(result, SerializableQuerySet):
+                result = result.to_safe_dict()
+            assert isinstance(result, dict) or isinstance(result, list)
         except Exception as e:
             code = 500
             result = {
@@ -79,7 +85,7 @@ def find_job_type(job_type, module=None):
             pass
 
     if not cls:
-        raise Exception("Job type '%s' is unknown%s." % (job_type, additionnal_error_info))
+        raise Exception("Job type '%s' is unknown %s." % (job_type, additionnal_error_info))
 
     return cls
 
@@ -130,11 +136,34 @@ class JobAPI(MethodView):
 
 
 ###
+# API Definition
+###
+class ClientAPI(MethodView):
+    decorators = [serialize]
+
+    def get(self, uuid=None):
+        lim = int(request.args.get('limit', 10))
+        off = int(request.args.get('offset', 0))
+        if uuid:
+            client = Client.objects.get(uuid=uuid)
+            if not client: return None
+            return client.to_safe_dict(with_history=True, limit=lim, offset=off)
+        else:
+            alive = bool(request.args.get('alive', False))
+            clients = Client.objects.order_by('-created')[off:lim].to_safe_dict()
+            if alive:
+                #clients = filter(lambda x: x['alive'], clients)
+                clients = [c for c in clients if c['alive'] == True]
+            return clients
+
+
+###
 # Error handling
 ###
 
 @app.errorhandler(Exception)
 def unknown_error(e):
+    logging.exception(e)
     mimetype = request.accept_mimetypes.best_match(tbx.text.mime_rendering_dict.keys(), default='application/json')
     result = {
         'status': 'ERROR',
@@ -169,5 +198,6 @@ def page_not_found(e):
 def run_api(host='0.0.0.0', port=5000, debug=False):
 
     register_api(JobAPI, 'job_api', '/job/', pk='uuid')
+    register_api(ClientAPI, 'client_api', '/client/', pk='uuid')
     app.run(host=host, port=port, debug=debug)
 

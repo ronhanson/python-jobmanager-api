@@ -25,3 +25,4 @@
 2015-11-19	--	v0.5.1-stable	-- version bump
 2015-11-25	--	v0.5.2-stable	-- fix
 2015-11-25	--	v0.5.3-stable	-- Exception catcher
+2016-02-12	--	v0.6.0	-- Added Client and Client Status support
