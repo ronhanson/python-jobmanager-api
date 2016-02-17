@@ -29,26 +29,13 @@ def serialize(func):
         mimetype = request.accept_mimetypes.best_match(tbx.text.mime_rendering_dict.keys(), default='application/json')
         result = {}
         code = 200
-        try:
-            result = func(*args, **kwargs)
-            if isinstance(result, BaseDocument):
-                result = result.to_safe_dict()
-            if isinstance(result, SerializableQuerySet):
-                result = result.to_safe_dict()
-            assert isinstance(result, dict) or isinstance(result, list)
-        except Exception as e:
-            code = 500
-            result = {
-                'status': 'ERROR',
-                'code': code,
-                'type': e.__class__.__name__,
-                'message': str(e),
-                'url': request.path,
-                'data': request.data.decode('UTF-8'),
-                'values': request.values
-            }
-            logging.error("An error happened while receiving the query "+repr(e))
-            logging.error("Stack: "+traceback.format_exc(e))
+
+        result = func(*args, **kwargs)
+        if isinstance(result, BaseDocument):
+            result = result.to_safe_dict()
+        if isinstance(result, SerializableQuerySet):
+            result = result.to_safe_dict()
+        assert isinstance(result, dict) or isinstance(result, list)
 
         return Response(tbx.text.render_dict_from_mimetype(result, mimetype), status=code, mimetype=mimetype)
     return wrapper
@@ -102,6 +89,9 @@ class JobAPI(MethodView):
         else:
             lim = int(request.args.get('limit', 10))
             off = int(request.args.get('offset', 0))
+            job_type = request.args.get('type', None)
+            if job_type:
+                return Job.objects(_cls=job_type).order_by('-created')[off:lim]
             return Job.objects.order_by('-created')[off:lim]
 
     def post(self):
@@ -163,6 +153,7 @@ class ClientAPI(MethodView):
 
 @app.errorhandler(Exception)
 def unknown_error(e):
+    logging.error(str(e))
     logging.exception(e)
     mimetype = request.accept_mimetypes.best_match(tbx.text.mime_rendering_dict.keys(), default='application/json')
     result = {
@@ -190,7 +181,6 @@ def page_not_found(e):
     }
     return Response(tbx.text.render_dict_from_mimetype(result, mimetype), status=404, mimetype=mimetype)
 
-
 ###
 # Run
 ###
@@ -200,4 +190,5 @@ def run_api(host='0.0.0.0', port=5000, debug=False):
     register_api(JobAPI, 'job_api', '/job/', pk='uuid')
     register_api(ClientAPI, 'client_api', '/client/', pk='uuid')
     app.run(host=host, port=port, debug=debug)
+    logging.info('Flask App exited gracefully, exiting...')
 
