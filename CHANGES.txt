@@ -28,3 +28,4 @@
 2016-02-12	--	v0.6.0	-- Added Client and Client Status support
 2016-02-17	--	v0.6.1	-- Fix exiting app with ctrl+c. Fixed error logging.
 2016-02-23	--	v0.6.2	-- fix
+2016-02-25	--	v0.6.3	-- fix
