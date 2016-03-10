@@ -32,3 +32,5 @@
 2016-02-25	--	v0.6.4	-- small fix on prerm
 2016-03-10	--	v0.6.6	-- Version bump
 2016-03-10	--	v0.6.7	-- Corrected packages
+2016-03-10	--	v0.6.9	-- Version bump
+2016-03-10	--	v0.6.9	-- Version bump
