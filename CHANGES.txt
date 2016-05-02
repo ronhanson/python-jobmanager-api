@@ -34,3 +34,4 @@
 2016-03-10	--	v0.6.7	-- Corrected packages
 2016-03-10	--	v0.6.9	-- Version bump
 2016-03-10	--	v0.6.9	-- Version bump
+2016-05-02	--	v0.6.10	-- requirements update
