@@ -139,9 +139,10 @@ class ClientAPI(MethodView):
             if not client: return None
             return client.to_safe_dict(with_history=True, limit=lim, offset=off)
         else:
-            alive = bool(request.args.get('alive', False))
-            if alive:
-                return Client.objects(created__gte=datetime.utcnow() - timedelta(minutes=1)).order_by('-created')[off:lim].to_safe_dict()
+            if 'alive' in request.args:
+                alive_clients = ClientStatus.objects(created__gte=datetime.utcnow() - timedelta(minutes=1)).aggregate({"$group": { "_id": "$client.uuid" }})
+                alive_client_uuids = [cs['_id'] for cs in alive_clients]
+                return Client.objects(uuid__in=alive_client_uuids).order_by('-created')[off:lim].to_safe_dict()
             else:
                 return Client.objects.order_by('-created')[off:lim].to_safe_dict()
 

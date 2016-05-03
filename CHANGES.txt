@@ -37,3 +37,4 @@
 2016-05-02	--	v0.6.10	-- requirements update
 2016-05-02	--	v0.6.11	-- fix
 2016-05-03	--	v0.6.12	-- fix:wq
+2016-05-03	--	v0.6.13	-- fix on alive method
