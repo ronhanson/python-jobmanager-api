@@ -140,11 +140,10 @@ class ClientAPI(MethodView):
             return client.to_safe_dict(with_history=True, limit=lim, offset=off)
         else:
             alive = bool(request.args.get('alive', False))
-            clients = Client.objects.order_by('-created')[off:lim].to_safe_dict()
             if alive:
-                #clients = filter(lambda x: x['alive'], clients)
-                clients = [c for c in clients if c['alive'] == True]
-            return clients
+                return Client.objects(created__gte=datetime.utcnow() - timedelta(minutes=1)).order_by('-created')[off:lim].to_safe_dict()
+            else:
+                return Client.objects.order_by('-created')[off:lim].to_safe_dict()
 
 
 ###
