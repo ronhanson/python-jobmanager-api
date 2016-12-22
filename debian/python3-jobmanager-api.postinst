@@ -61,11 +61,11 @@ case "$1" in
         sed -i -e "/^\[DATABASE\]/,/^\[.*\]/ s|^\([ \t]*HOST[ \t]*=[ \t]*\).*$|\1\"${RET}\"|" ${JM_CONF}
         sed -i -e "/^\[LOG\]/,/^\[.*\]/ s|^\([ \t]*LOGGING_MONGO_HOST[ \t]*=[ \t]*\).*$|\1\"${RET}\"|" ${JM_CONF}
 
-        db_get jobmanager-client/dbport
+        db_get jobmanager-api/dbport
         sed -i -e "/^\[DATABASE\]/,/^\[.*\]/ s|^\([ \t]*PORT[ \t]*=[ \t]*\).*$|\1${RET}|" ${JM_CONF}
         sed -i -e "/^\[LOG\]/,/^\[.*\]/ s|^\([ \t]*LOGGING_MONGO_PORT[ \t]*=[ \t]*\).*$|\1\"${RET}\"|" ${JM_CONF}
 
-        db_get jobmanager-client/dbname
+        db_get jobmanager-api/dbname
         sed -i -e "/^\[DATABASE\]/,/^\[.*\]/ s|^\([ \t]*NAME[ \t]*=[ \t]*\).*$|\1\"${RET}\"|" ${JM_CONF}
         sed -i -e "/^\[LOG\]/,/^\[.*\]/ s|^\([ \t]*LOGGING_MONGO_DATABASE[ \t]*=[ \t]*\).*$|\1\"${RET}\"|" ${JM_CONF}
 
