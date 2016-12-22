@@ -40,3 +40,4 @@
 2016-05-03	--	v0.6.13	-- fix on alive method
 2016-12-22	--	v0.7.0	-- New Deb debian build system based on docker rather than vagrant. Much lighter.
 2016-12-22	--	v0.8.0	-- Major update with brand new UI to get an overview of the jobs.
+2016-12-22	--	v0.8.1	-- Small fix on debian packaging
