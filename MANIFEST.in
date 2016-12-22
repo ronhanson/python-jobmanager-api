@@ -1,5 +1,6 @@
 include *.txt *.md *.xml
 include bin/*.ini bin/*.spec
 recursive-include docs *.txt *.md
+recursive-include jobmanager *.html *.css *.js
 prune fabfile
 prune tools

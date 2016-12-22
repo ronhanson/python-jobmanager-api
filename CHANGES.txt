@@ -44,3 +44,4 @@
 2016-12-22	--	v0.8.2	-- Fix on deb packaging
 2016-12-22	--	v0.8.3	-- fix on debian packaging
 2016-12-22	--	v0.8.4	-- Fix on deb packaging
+2016-12-22	--	v0.8.5	-- Fix on packaging
