@@ -1,0 +1,402 @@
+/*
+Job Manager API
+Client Live Page CSS
+@author Ronan Delacroix
+*/
+
+#container {
+    background: #222;
+    padding: 0 0 30px 0;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    display: table;
+    border-spacing: 30px;
+}
+
+#commands {
+    padding: 10px 6px;
+    border-radius: 50%;
+    border-width: 3px;
+    transition: background 0.2s;
+    cursor: pointer;
+    opacity: 0.5;
+    top: 10px;
+    right: 10px;
+}
+
+#commands:hover {
+    background:rgba(100,100,100,1.0);
+    opacity: 1.0;
+}
+
+div.job {
+    margin: 20px 0px 0px 20px;
+    background: #222;
+    /* border: solid 1px #444; */
+    background: #485563;
+    background: -webkit-linear-gradient(to left, #485563 , #29323c);
+    background: linear-gradient(to left, #485563 , #29323c);
+    position: relative;
+    padding: 10px 20px 20px 20px;
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.8), inset 0px 1px 3px -1px rgba(255,255,255,0.8);
+    border-radius: 3px;
+    overflow: hidden;
+    transition: opacity 0.2s;
+    display: table-cell;
+    min-height: 200px;
+    width: 340px;
+    vertical-align: top;
+
+}
+
+#container.single div.job {
+    display: inline-block;
+}
+
+div.job.loading {
+    -webkit-filter: blur(2px); /* Safari */
+    filter: blur(2px);
+}
+/*
+div.job.dead {
+    opacity: 0.5;
+}*/
+
+div.job.dead:hover {
+    opacity: 1.0;
+}
+
+div.job .loader {
+    opacity: 0.0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 1.3em;
+    top: 0px;
+    left: 0px;
+    font-size: 2em;
+    color: rgba(20,20,20, 0.5);
+    display: none;
+}
+div.job.loading .loader {
+    opacity: 1;
+    display: table-cell;
+}
+
+
+div.job > div {
+    /*
+    padding: 2px 15px;
+    */
+}
+
+.column {
+    float: left;
+    margin: 0px 7px 0px 7px;
+}
+
+.column.general, .column.history {
+    width: 330px;
+}
+.dead .column.statistics {
+    opacity: 0.3;
+}
+/*
+.column.jobs {
+    float: none;
+    overflow: hidden;
+}
+*/
+
+.header > div {
+    padding: 7px 15px 7px 15px;
+
+    color: white;
+    font-weight: bold;
+}
+
+.header > div:first-child {
+    border-radius: 30px 0px 0px 30px;
+}
+
+.header > div:last-child {
+    border-radius: 0px 30px 30px 0px;
+}
+
+.header > div.only-child {
+    border-radius: 30px 30px 30px 30px;
+}
+
+
+.row {
+    margin: 10px 0px;
+}
+
+.row.header {
+    position: relative;
+    left: -10px;
+    width: 350px;
+    display: table;
+    border-spacing: 8px 4px;
+    table-layout: fixed;
+    margin: 0px;
+}
+
+.row.header > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 17px;
+    display: table-cell;
+    text-align: left;
+}
+
+.emboss {
+    box-shadow: 0px 1px 5px 1px rgba(0,0,0,0.5), inset 0px 1px 2px -1px rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.08);
+    transition: all 0.2s;
+}
+
+.dig {
+    box-shadow: inset 0 0 5px 1px rgba(0,0,0,.6), 0px 1px 3px -1px rgba(255,255,255,0.5);
+    background: rgba(0,0,0,0.08);
+    transition: all 0.2s;
+}
+
+.button {
+    cursor: pointer;
+}
+.tooltip {
+    cursor: help;
+}
+.emboss.button:hover , .emboss.tooltip:hover {
+    background: rgba(255,255,255,0.1);
+    box-shadow: 1px 1px 8px 2px rgba(0,0,0,0.8), inset 0px 1px 3px -1px rgba(255,255,255,0.8);
+}
+
+.job.running .header .uuid, .job.running .header .status  {
+    background : rgba(91, 211, 220, 0.73);
+}
+.job.success .header .uuid, .job.success .header .status {
+    background : rgba(82, 193, 95, 0.8);
+}
+.job.error .header .uuid, .job.error .header .status {
+    background : rgba(193, 86, 82, 0.5);
+}
+.job.pending .header .uuid, .job.pending .header .status {
+    background : rgba(253, 179, 31, 0.77);
+}
+
+.finished .header .uuid:before {
+    content: "\2625 ";
+    display: inline-block;
+    font-size: 1.5em;
+    font-weight: 900;
+    margin-right: 10px;
+    line-height: 0.5em;
+}
+
+.header .small_button {
+    padding: 7px 12px 7px 10px;
+    width: 10px;
+    transition: all 0.5s;
+}
+
+.header .medium_button {
+    padding: 7px 7px 7px 7px;
+    width: 70px;
+    transition: all 0.5s;
+}
+
+.header .medium_button label {
+    font-size: 0.7em;
+}
+
+@keyframes pulse {
+  50% { background-color: rgba(156, 218, 222, 0.85); }
+}
+
+.job.running .status, .job.running .uuid {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+.header .platform {
+    width: 10px;
+    padding: 7px 12px 7px 10px;
+}
+
+.header .button.logs {
+    width: 10px;
+    padding: 7px 17px 7px 10px;
+}
+
+.python span.fa {
+    border-radius: 12px;
+    display: inline-block;
+    padding: 5px 8px;
+    margin: 0px 8px 5px 0px;
+    box-shadow: 0 0 5px 1px rgba(0,0,0,.6), inset 0px 1px 3px -1px rgba(255,255,255,0.5);
+}
+
+.job_types ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+.job_types .tag {
+    /*background: #788593;*/
+    border-radius: 3px;
+    display: inline-block;
+    float: left;
+    padding: 5px 8px;
+    margin: 0px 5px 5px 0px;
+
+    box-shadow: inset 0 0 5px 1px rgba(0,0,0,.6), 0px 1px 3px -1px rgba(255,255,255,0.5);
+}
+
+.platform.windows::before {
+    content: "\f17a";
+}
+.platform.darwin::before {
+    content: "\f179";
+}
+.platform.linux::before {
+    content: "\f17c";
+}
+
+.small {
+    font-size: x-small;
+    margin: 0 0 5px 0;
+}
+
+.job table {
+    width: 100%;
+}
+.job table td {
+    text-align: right;
+}
+.job table td.label {
+    text-align: right;
+}
+
+.details {
+    text-align: left;
+    overflow:hidden;
+    width: 310px;
+
+}
+.details pre {
+    overflow-x: hidden;
+    padding: 10px 10px;
+    margin: 0px;
+}
+.full-view .column.history {
+    display: inline-block;
+}
+.small-view .column.history {
+    display: None;
+}
+.details_row, .history_row {
+    width: 100%;
+}
+
+.history h2 {
+    margin: 5px;
+    font-size: medium;
+}
+
+table.hist {
+    font-family: monospace;
+    font-size: small;
+}
+
+.job table.hist td {
+    padding: 2px 5px;
+    text-align: left;
+}
+.job table.hist td.completion {
+    text-align: right;
+}
+
+table.hist tr.error td {
+    background: rgba(200,100,100,0.5);
+}
+
+table.hist tr.success td {
+    background: rgba(100,200,100,0.5);
+}
+
+.header .gauge.progress {
+    position: relative;
+    padding: 0px;
+}
+.gauge .complete {
+    background: rgb(82, 193, 95);
+    position: absolute;
+    font-family: Consolas, sans-serif;
+    font-size: 0.8em;
+    line-height: 20px;
+    transition: height 1s, top 1s, background 1s;
+    height: 25px;
+    border-radius: 2px;
+    box-shadow: inset 2px 2px 5px 0px rgba(0,0,0,.5);
+    margin: 4px;
+    transition: all 1s;
+}
+
+.job.error .gauge .complete {
+    background: rgba(193, 86, 82, 0.5);
+    box-shadow: inset 2px 1px 3px -1px rgba(0,0,0,.5);
+}
+
+.gauge .percent {
+    display: block;
+    z-index: 10;
+    position: absolute;
+    font-size: small;
+    width: 100%;
+    text-align: left;
+    text-shadow: 0 0.5px 1px rgba(0,0,0,0.5);
+    margin: 0 0 0 15px;
+    line-height: 33px;
+}
+
+.mfp-iframe-holder .mfp-content {
+    max-width: 1900px;
+    width: 100%;
+    height: 90%;
+}
+
+.job_view .mfp-content {
+    width: 500px;
+}
+
+
+
+@media only screen and (max-width:1000px) {
+    .column.jobs {
+        float: left;
+        width: 95%;
+        margin-top: 15px;
+    }
+}
+@media only screen and (max-width:782px) {
+    #container.small-view div.job {
+        width: 89%;
+        min-height: 100px;
+    }
+
+    .row.header {
+        width: 100%;
+        display: table;
+    }
+    .column.general {
+        width: 100%;
+    }
+    .column.statistics {
+        margin-top:15px;
+    }
+}

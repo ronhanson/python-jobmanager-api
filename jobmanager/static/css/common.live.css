@@ -1,0 +1,130 @@
+/*
+Job Manager API
+Live Pages CSS
+@author Ronan Delacroix
+*/
+
+body, table { padding:0 0 0 0; margin:0; font-family: sans-serif;}
+body { background: black; }
+table { color: inherit; border-spacing : 0; border-collapse : collapse; }
+table tr td, table tr th { padding: 0; }
+
+#container {
+    color: #DDD;
+    background: #000;
+    padding: 4px 6px;
+    font-size: 15px;
+    min-height: 100%;
+    overflow: scroll-y;
+    padding: 0;
+}
+
+#commands {
+    position:fixed;
+    top:20px;
+    right:20px;
+    padding:20px;
+    background:#222;
+    border:solid 5px black;
+    font-family: Consolas, sans-serif;
+    font-size: 13px;
+    color:#DDD;
+}
+
+#commands.loading:after{
+    content: "\f013";
+    font-family: FontAwesome;
+    color: rgba(255,255,255,0.4);
+    -webkit-animation: fa-spin 2s infinite linear;
+    animation: fa-spin 2s infinite linear;
+    text-align: center;
+    display: inline-block;
+    position: absolute;
+    top: 33%;
+    left: 0px;
+    width: 100%;
+    font-size: 10em;
+}
+#commands.loading:before{
+    content:"";
+    width:100%;
+    height:100%;
+    display: block;
+    position:absolute;
+    top:0px;
+    left:0px;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+#commands table {
+    padding: 0 0 0 0px;
+    color:#DDD;
+    font-family: Consolas, sans-serif;
+    font-size: 13px;
+    border-spacing: 0px;
+    border-collapse: separate;
+}
+
+#commands table td {
+    padding: 2px 5px;
+}
+
+#commands table tr:hover {
+    background:#444;
+}
+
+table i.fa {
+    margin-right: 5px;
+}
+
+#filters_table {
+    margin: 0 0 0 20px;
+}
+
+#filters_table input + ul.input_select {
+    position: absolute;
+    display: block;
+    padding: 2px;
+    list-style-type: none;
+    background: lightgrey;
+    margin: 0px;
+    color: black;
+    font-size: 0.8em;
+}
+
+#filters_table ul li{
+    padding: 4px 5px;
+    background: #AAA;
+    color: black;
+    cursor: pointer;
+    width: 127px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+#filters_table ul li.odd {
+    background: #CCC;
+}
+#filters_table ul li:hover{
+    background: #888;
+}
+#additional_filters_button, #additional_filters_button label {
+    cursor:pointer;
+}
+#additional_filters_button:hover {
+    font-weight:bold;
+}
+
+#filters_table button {
+    border: solid 3px black;
+    font-size: 1.1em;
+    margin: 2px auto;
+    text-align: center;
+    padding: 2px 20px;
+    font-weight: 400;
+    font-family: inherit;
+}
+
+#filters_table button:hover {
+    background:#DDD;
+    border: solid 3px #444;
+}

@@ -1,0 +1,29 @@
+{% extends "common/base.html" %}
+{% block head %}
+    <link href="/static/css/log.live.css" rel="stylesheet" type="text/css" media="all">
+    <script src="/static/js/log.live.js"></script>
+{% endblock %}
+{% block body %}
+<div id="container"></div>
+<div id="commands">
+    <table>
+        <tr><td><label><i class="fa fa-chevron-circle-down"></i>Follow</label></td><td><input type="checkbox" name="follow_checkbox" id="follow_checkbox" checked /></td></tr>
+        <tr><td><label><i class="fa fa-clock-o"></i>Refresh Rate</label></td><td><input type="number" name="refresh_rate" id="refresh_rate" value="2000" min="200" /></td></tr>
+        <tr><td colspan="2" id="additional_filters_button"><label><i class="fa fa-filter"></i>Additional filters</label></td></tr>
+        <tr id="additional_filters_row" style="display:none;"><td colspan="2">
+            <form id="filters">
+                <table id="filters_table">
+                    <tr><td><label>hostname         </label></td><td><input type="text" name="hostname" value="{{hostname}}" /></td></tr>
+                    <tr><td><label>log_name         </label></td><td><input type="text" name="log_name" value="{{log_name}}"/></td></tr>
+                    <tr><td><label>application      </label></td><td><input type="text" name="application" value="{{application}}"/></td></tr>
+                    <tr><td><label>job_type         </label></td><td><input type="text" name="job_type" value="{{job_type}}"/></td></tr>
+                    <tr><td><label>job_uuid         </label></td><td><input type="text" name="job_uuid" value="{{job_uuid}}"/></td></tr>
+                    <tr><td><label>client_uuid      </label></td><td><input type="text" name="client_uuid" value="{{client_uuid}}"/></td></tr>
+                    <tr><td><label>client_hostname  </label></td><td><input type="text" name="client_hostname" value="{{client_hostname}}"/></td></tr>
+                    <tr><td colspan="2"><button>Update</button></td></tr>
+                </table>
+            </form>
+        </td></tr>
+    </table>
+</div>
+{% endblock %}

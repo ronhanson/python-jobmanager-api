@@ -1,0 +1,80 @@
+{% extends "common/base.html" %}
+{% block head %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/smoothie/1.27.0/smoothie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/static/css/job.live.css" rel="stylesheet" type="text/css" media="all">
+    <script src="/static/js/job.live.js"></script>
+{% endblock %}
+{% block body %}
+<div id="container" class="small-view {% if job_uuid: %}single{% endif %}" data-job_uuid="{{ job_uuid }}"></div>
+<div id="commands">
+    <i class="fa fa-eye-slash fa-fw fa-2x"></i>
+</div>
+
+<script type="text/template" id="job_template">
+    <div class="job loading" id="<%= job.uuid %>">
+        <div class="loader"><i class="fa fa-circle-o-notch fa-spin fa-5x fa-fw"></i></div>
+        <div class="column general">
+            <div class="row header">
+                <div class="emboss medium_button status" title="Status"><i class="fa fa-fw"></i>&nbsp;<label>Job</label></div>
+                <div class="emboss uuid" title="Job ID"><%= job.uuid %></div>
+                <div class="emboss small_button job_logs logs button" data-job_uuid="<%= job.uuid %>" title="View Job Logs"><i class="fa fa-align-left"></i></div>
+            </div>
+            <div class="row header">
+                <div class="emboss medium_button type" title="Type"><i class="fa fa-fw fa-tag"></i>&nbsp;<label>Type</label></div>
+                <div class="emboss job_type"><%= job.type %></div>
+                <!--<div class="emboss tooltip job-info fa fa-info" title="Started on <%= job.created %>"></div>-->
+            </div>
+            <div class="row header">
+                <div class="emboss medium_button server" title="Server / Machine"><i class="fa fa-fw fa-server"></i>&nbsp;<label>Server</label></div>
+                <div class="emboss client_hostname"><%= job.client_hostname || '<i class="fa fa-fw fa-cog fa-spin"></i>' %></div>
+            </div>
+            <div class="row header">
+                <div class="emboss medium_button client" title="Client"><i class="fa fa-fw fa-cog"></i>&nbsp;<label>Client</label></div>
+                <div class="emboss client_uuid"><%= job.client_uuid  || '<i class="fa fa-fw fa-cog fa-spin"></i>' %></div>
+                <div class="emboss small_button client_logs logs button" data-client_uuid="<%= job.client_uuid %>" title="View Client Logs"><i class="fa fa-align-left"></i></div>
+            </div>
+            <div class="row header">
+                <div class="emboss medium_button progress" title="Client"><i class="fa fa-fw fa-percent"></i>&nbsp;<label>Progress</label></div>
+                <div class="dig progress gauge"><div class="complete"></div><div class="percent"></div></div>
+            </div>
+            <div class="row">
+                <div class="small dates">Started <span class="since">...</span> (Duration - <span class="for">...</span>). <span class="stopped"></span></div>
+            </div>
+        </div>
+        <div class="column history">
+            <div class="details_row">
+                <h2>Details</h2>
+                <div class="row">
+                    <div class="small dig details"><pre></pre></div>
+                </div>
+            </div>
+            <div class="history_row">
+                <h2>History</h2>
+                <table class="hist">
+                    <%
+                    var i=1;
+                    var compiled =  _.template($('#hist_template').html());
+                    _.each(job.history, function (h) {
+                    %>
+                        <%= compiled({h:h, i:i, job:job}) %>
+                    <%
+                        i = i+1;
+                    });
+                    %>
+                </table>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="hist_template">
+                <tr class="<%= h.s %>" id="<%= i %>">
+                    <td class="datetime" title="<%= h.t %>"><%= moment.duration(moment.utc(h.t) - moment.utc(job.started)).format("mm:ss", { forceLength: true, trim: false }) %></td>
+                    <td class="completion"><%= h.c+'%' %></td>
+                    <td class="label"><%= h.m %></td>
+                </tr>
+</script>
+
+{% endblock %}
