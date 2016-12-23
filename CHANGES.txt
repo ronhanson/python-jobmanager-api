@@ -45,3 +45,4 @@
 2016-12-22	--	v0.8.3	-- fix on debian packaging
 2016-12-22	--	v0.8.4	-- Fix on deb packaging
 2016-12-22	--	v0.8.5	-- Fix on packaging
+2016-12-23	--	v0.9.0	-- Misc fixes - logs working with other version of pymongo, favicon, debian packaging, etc.

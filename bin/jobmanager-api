@@ -26,9 +26,13 @@ tbx.log.configure_logging("jobmanager-api", application_name='jobmanager', setti
 def import_from_name(module_name):
     globals()[module_name] = __import__(module_name)
 
+
 def main():
-    log = logging.getLogger('werkzeug')
-    log.setLevel(logging.DEBUG)
+    werkzeug_log = logging.getLogger('werkzeug')
+    if settings.WEB.DEBUG:
+        werkzeug_log.setLevel(logging.DEBUG)
+    else:
+        werkzeug_log.setLevel(logging.WARNING)
 
     while True:
         try:
@@ -42,10 +46,6 @@ def main():
                     exit(1)
             jobmanager.api.run_api(host=settings.WEB.HOST, port=settings.WEB.PORT, debug=settings.WEB.DEBUG)
 
-            #for h in logging.getLogger().handlers:
-            #    if isinstance(h, BufferedMongoHandler):
-            #        h.destroy()
-
             exit(0)
         except KeyboardInterrupt:
             logging.error("Received Keyboard Interrupt. Exiting.")
@@ -57,7 +57,7 @@ def main():
             logging.exception("Unknown Error (%s). Waiting 10 seconds for retry..." % str(e))
             time.sleep(10)
 
-    #exit(0)
+    exit(0)
 
 if __name__ == "__main__":
     main()

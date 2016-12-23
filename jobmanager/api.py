@@ -128,7 +128,6 @@ class JobAPI(MethodView):
         return render_template('job/live.html', title="Job Manager - %s Job view" % (uuid), **args)
 
     def post(self):
-        logging.debug("Post on", extra={'blah': 'blih'})
         data = request.data.decode('UTF-8')
         data = json.loads(data)
         job_type = data.pop('type', None)
@@ -153,6 +152,8 @@ class JobAPI(MethodView):
         data = json.loads(data)
         job.update(**data)
         job.reload()
+        logging.info("Updated Job %s" % uuid)
+        logging.info(str(job))
         job.save()
         return job
 
@@ -250,7 +251,7 @@ class JobLogAPI(object):
         if since:
             since = arrow.get(since).datetime
             filters["timestamp"] = {"$gte": since}
-        return self.db.job_logs.find(filter=filters).sort([('timestamp', -1)]).limit(limit)
+        return self.db.job_logs.find(filters).sort([('timestamp', -1)]).limit(limit)
 
     @serialize
     def get(self):
@@ -335,7 +336,6 @@ def page_not_found(e):
 # Run
 ###
 def run_api(host='0.0.0.0', port=5000, debug=False):
-
     register_api(JobAPI, 'job_api', '/job/', pk='uuid')
     app.add_url_rule('/job/live/', endpoint='job_view', view_func=JobAPI.live, methods=['GET'])
     app.add_url_rule('/job/live/<string(length=11):uuid>', endpoint='job_view', view_func=JobAPI.live, methods=['GET'])
