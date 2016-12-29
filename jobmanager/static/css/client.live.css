@@ -39,7 +39,6 @@ div.client {
     box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.8), inset 0px 1px 3px -1px rgba(255,255,255,0.8);
     border-radius: 3px;
     overflow: hidden;
-    transition: opacity 0.2s;
 }
 
 #container.full-view div.client {
@@ -58,15 +57,15 @@ div.client.loading {
 }
 
 div.client.dead {
-    opacity: 0.5;
-}
-
-#container.small-view div.column.statistics, #container.small-view div.column.jobs {
-    display: none;
+    opacity: 0.7;
 }
 
 div.client.dead:hover {
     opacity: 1.0;
+}
+
+#container.small-view div.column.statistics, #container.small-view div.column.jobs {
+    display: none;
 }
 
 div.client .loader {
@@ -207,6 +206,7 @@ div.client > div {
 .header .platform {
     width: 10px;
     padding: 7px 12px 7px 10px;
+    font-weight: normal;
 }
 
 .header .button.logs {

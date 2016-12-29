@@ -11,7 +11,7 @@ Logs Live Page JS
 
     function get_client_data() {
 
-        $.getJSON('/client/', {}, get_client_data_callback);
+        $.getJSON('/client/', {alive:240}, get_client_data_callback);
     }
 
     function get_client_data_callback(data) {
@@ -32,11 +32,12 @@ Logs Live Page JS
             return;
         }
 
+        clean_client_list(data);
+        sort_client_list(data);
 
         $.each(data.reverse(), function process_base_client_data(i, base_client_data) {
             if ($("#"+base_client_data.uuid).length==0) {
                 var compiled = _.template($('#client_template').html());
-                //base_client_data.python_packages = '<base_client_data.python_packages.replace('\n', '<br/>');
                 $("#container").prepend(compiled({client: base_client_data}));
             }
             if (!clients[base_client_data.uuid]) {
@@ -79,7 +80,9 @@ Logs Live Page JS
                 update_client_data(client, client_data);
 
                 current_status = client_data.history[0];
-                update_current_status_data(client, client_data, current_status);
+                if (current_status) {
+                    update_current_status_data(client, client_data, current_status);
+                }
 
                 update_meters(client_data);
 
@@ -88,6 +91,43 @@ Logs Live Page JS
 
 
         });
+    }
+
+
+    function clean_client_list(client_data) {
+        var alive_client_uuids = _.pluck(client_data, 'uuid');
+        var dom_client_uuids = _.pluck($('.client'), 'id');
+        _.each(_.difference(alive_client_uuids, dom_client_uuids), function(id) {
+            $("#"+id).removeClass('alive dead').addClass('dead');
+        });
+    }
+
+
+    function sort_client_list(client_data) {
+        var container = $("#container");
+
+        var dom_client_uuids = _.pluck($('.client'), 'id');
+        var new_order = container.find('.client').sort(function(a, b) {     // first sort by created date
+            _a =  _.findWhere(client_data, {'uuid': a.id});
+            _b = _.findWhere(client_data, {'uuid': b.id})
+            return _b.created > _a.created;
+        }).sort(function(a, b) {                                            // second sort by alive or not
+            var _a = 0;                                                     // second sort by alive or not
+            var _b = 0;
+            if ($(a).hasClass('alive')) { _a = 1; }
+            if ($(a).hasClass('dead')) { _a = -1; }
+            if ($(b).hasClass('alive')) { _b = 1; }
+            if ($(b).hasClass('dead')) { _b = -1; }
+            return _b - _a;
+        });
+
+        var new_order_uuids = _.pluck(new_order, 'id');
+        var intersect_length = _.intersection(new_order_uuids, dom_client_uuids).length;
+        if (intersect_length != new_order_uuids.length || intersect_length != dom_client_uuids.length) {                          // do DOM sort only if needed
+            new_order.appendTo(container);
+        }
+
+
     }
 
 
@@ -114,7 +154,7 @@ Logs Live Page JS
             client_status = 'dead';
         }
 
-        client_running = client_dom.addClass(client_status);
+        client_running = client_dom.removeClass('alive dead').addClass(client_status);
         client_running_pid = client_dom.find('.pid .value').html(client_data.pid);
         client_running_since = client_dom.find('.since').html(_since.fromNow());
         client_running_for = client_dom.find('.for').html(_now.diff(_since, 'hours', true).toFixed(1)+' hours');
@@ -247,7 +287,7 @@ Logs Live Page JS
     }
 
     function process_jobs(client, jobs) {
-        console.log('Processing jobs for '+client.attr('id'));
+        console.log('Processing jobs for client '+client.attr('id'));
 
         if (!client.hasClass('job_processing')) {
             try {
@@ -309,7 +349,7 @@ Logs Live Page JS
                 client.removeClass('job_processing');
                 throw e;
             }
-            console.log('Processing client '+client.attr('id') +'jobs complete.');
+            console.log('Processing jobs of client '+client.attr('id') +' complete.');
         }
         else {
             console.log('Bypassing jobs processing for '+client.attr('id') +'.');

@@ -42,7 +42,6 @@ div.job {
     box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.8), inset 0px 1px 3px -1px rgba(255,255,255,0.8);
     border-radius: 3px;
     overflow: hidden;
-    transition: opacity 0.2s;
     display: table-cell;
     min-height: 200px;
     width: 340px;

@@ -27,15 +27,26 @@ Common Live Page JS
 
         //common
         $('body').on('mouseenter', '.tooltip:not(.tooltipstered)', function(){
-            //var sides = ['bottom', 'right', 'top', 'left'];
+            var sides = ['bottom'];
             //if ($(this).hasClass('tooltip-right')) { sides = ['right', 'bottom', 'top', 'left']; }
-            $(this).tooltipster({trigger: 'click', side: 'bottom', delay: 0, contentAsHTML: true});
-                   //.tooltipster('open');
+            $(this).tooltipster({
+                plugins: ['sideTip'],
+                trigger: 'click',
+                side: sides,
+                delay: 0,
+                contentAsHTML: true,
+                theme: 'tooltipster-jobmanager',
+                animation: 'raise'
+
+            });
+            //.tooltipster('open');
             /*
             'fade',
             'grow',
             'swing',
-            'slide',*/
+            'slide',
+            'fall'
+            */
         });
     });
 

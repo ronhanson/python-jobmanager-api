@@ -6,7 +6,7 @@
 Python Job Manager Server API
 :author: Ronan Delacroix
 """
-from flask import Flask, request, Response, render_template
+from flask import Flask, request, Response, render_template, url_for
 from functools import wraps
 import json
 from flask.views import MethodView
@@ -175,7 +175,8 @@ class ClientAPI(MethodView):
             return client.to_safe_dict(alive=True, with_history=True, limit=lim, offset=off, step=step)
         else:
             if 'alive' in request.args:
-                alive_clients = ClientStatus.objects(created__gte=datetime.utcnow() - timedelta(minutes=1)).aggregate({"$group": { "_id": "$client.uuid" }})
+                alive = int(request.args.get('alive', 1))
+                alive_clients = ClientStatus.objects(created__gte=datetime.utcnow() - timedelta(minutes=alive)).aggregate({"$group": { "_id": "$client.uuid" }})
                 alive_client_uuids = [cs['_id'] for cs in alive_clients]
                 return Client.objects(uuid__in=alive_client_uuids).order_by('-created')[off:lim].to_safe_dict()
             else:
@@ -298,6 +299,11 @@ class JobLogAPI(object):
         ]).get('result')
 
 
+
+@serialize
+def index():
+    return {'url': '<a href="/client/live">/client</a>'}
+
 ###
 # Error handling
 ###
@@ -351,6 +357,9 @@ def run_api(host='0.0.0.0', port=5000, debug=False):
     app.add_url_rule('/logs/live/', view_func=job_log.live, methods=['GET'])
     app.add_url_rule('/logs/distinct/', view_func=job_log.list_distinct, methods=['GET'])
     app.add_url_rule('/logs/distinct/<string:field>', view_func=job_log.list_distinct, methods=['GET'])
+
+    app.add_url_rule('/favicon.ico', endpoint='favicon', redirect_to='/static/favicon.ico')
+    app.add_url_rule('/', endpoint='index', view_func=index)
 
     app.run(host=host, port=port, debug=debug)
     logging.info('Flask App exited gracefully, exiting...')
