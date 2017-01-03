@@ -1,0 +1,92 @@
+/*
+Job Manager API
+Client Live Page CSS
+@author Ronan Delacroix
+*/
+
+#container {
+    background: #222;
+    padding: 0 0 30px 0;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    border-spacing: 20px;
+    vertical-align: middle;
+    line-height: 100%;
+}
+
+a, a:visited, a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+div.menu {
+    background: #222;
+    /* border: solid 1px #444; */
+    background: #485563;
+    background: -webkit-linear-gradient(to left, #485563 , #29323c);
+    background: linear-gradient(to left, #485563 , #29323c);
+    padding: 10px 20px 20px 20px;
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.8), inset 0px 1px 3px -1px rgba(255,255,255,0.8);
+    border-radius: 3px;
+    overflow: hidden;
+    display: inline-block;
+    min-height: 200px;
+    width: 50%;
+    min-width: 200px;
+    font-size: 1.4em;
+    transform: translateY(25%);
+
+}
+
+div.menu h1 {
+    font-size: 1.3em;
+    line-height: 1.3em;
+    margin: 1.5em auto;
+}
+
+.header div {
+    padding: 7px 15px 7px 15px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+.header div .fa {
+    font-weight: normal;
+}
+
+.header div {
+    border-radius: 5px;
+}
+
+.row {
+    margin: 10px auto;
+}
+
+.row.header {
+    position: relative;
+    width: 90%;
+}
+
+.row.header div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 50px;
+}
+
+.emboss {
+    box-shadow: 0px 1px 5px 1px rgba(0,0,0,0.5), inset 0px 1px 2px -1px rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.08);
+    transition: all 0.2s;
+}
+.button, .button label{
+    cursor: pointer;
+}
+.tooltip {
+    cursor: help;
+}
+.emboss.button:hover , .emboss.tooltip:hover {
+    background: rgba(255,255,255,0.2);
+    box-shadow: 1px 1px 8px 2px rgba(0,0,0,0.8), inset 0px 1px 3px -1px rgba(255,255,255,0.8);
+}
