@@ -144,21 +144,23 @@ Logs Live Page JS
 
     function update_client_data(client_dom, client_data) {
         var _since = moment.utc(client_data.created);
-        var _now = moment.utc(client_data.last_seen_alive);
+        var _last_alive = moment.utc(client_data.last_seen_alive);
+        var _now = null;
         clients[client_data.uuid].last_update = _since;
         var client_status = null;
         if (client_data.alive==true) {
             client_status = 'alive';
+            _now = _last_alive; // if client is alive, we take his own "now" datetime as a reference
         }
         else {
             client_status = 'dead';
+            _now = moment.utc();
         }
 
         client_running = client_dom.removeClass('alive dead').addClass(client_status);
         client_running_pid = client_dom.find('.pid .value').html(client_data.pid);
-        client_running_since = client_dom.find('.since').html(_since.fromNow());
-        client_running_for = client_dom.find('.for').html(_now.diff(_since, 'hours', true).toFixed(1)+' hours');
-        client_running_since = client_dom.find('.since').html(_since.fromNow());
+        client_running_since = client_dom.find('.since').html(_since.from(_now));
+        client_running_for = client_dom.find('.for').html(_last_alive.diff(_since, 'hours', true).toFixed(1)+' hours');
         client_running_pool_size = client_dom.find('.slots.total').html(client_data.pool_size);
         if (client_dom.find('.job_types ul').children().length==0) {
             client_running_job_types = '';
@@ -169,7 +171,7 @@ Logs Live Page JS
         }
 
         if (client_data.alive==false && clients[client_data.uuid].last_update != null) {
-            client_running_since = client.find('.dates .stopped').html( 'Dead since '+_now.fromNow()+'.');
+            client_running_since = client.find('.dates .stopped').html( 'Dead since '+_last_alive.fromNow()+'.');
             clients[client_data.uuid].last_update = _since;
             return;
         }

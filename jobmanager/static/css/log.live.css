@@ -34,3 +34,15 @@ body { background: black; padding:0 0 80px 0; margin:0;}
     background: #888;
     color: #FFF;
 }
+
+
+#container p span {
+    border-radius: 50px;
+    background: rgba(255,255,255, 0.2);
+    padding: 3px 10px;
+    cursor: pointer;
+}
+
+#container p span:hover {
+    background: rgba(255,255,255, 0.5);
+}

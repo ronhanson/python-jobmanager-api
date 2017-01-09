@@ -17,6 +17,36 @@ Logs Live Page JS
         var additional_filters_button = $("#additional_filters_button");
         var filters_button = $("#filters button");
         var filters_input = $("#filters input");
+        var log_format_template = _.template('<%= timestamp %> <%= hostname %>');
+
+
+        function update_log_format_template() {
+            var log_format = $("#log_format").val();
+            var processed_log_format = log_format;
+            _.each(_.uniq(log_format.split(' ')), function(elem) {
+                if (elem.length>2) {
+                    processed_log_format = processed_log_format.replace(elem, '<% if (!_.isUndefined(arguments[0].'+elem+')) { %><span data-element="'+elem+'" title="'+elem+'"><%- '+elem+' %></span><% } %>');
+                }
+            });
+            processed_log_format += " - <%- message %>";
+            log_format_template = _.template(processed_log_format);
+        }
+
+        function on_log_format_change() {
+            update_log_format_template();
+            refresh_data();
+        }
+
+        function on_log_element_click() {
+            var that = $(this);
+            var element = that.data('element');
+            var corresponding_input = $("#additional_filters_row input[name='"+element+"']");
+            if (corresponding_input.length>0) {
+                corresponding_input.val(that.text());
+                refresh_data();
+            }
+
+        }
 
         function on_input_change() {
             localStorage.setItem("commands_"+($(this).attr('name')), $(this).val());
@@ -30,7 +60,7 @@ Logs Live Page JS
         function init_form() {
             $.each(commands_input, function() {
                 var saved_value = localStorage.getItem("commands_"+($(this).attr('name')));
-                if (saved_value && $(this).val()=="") {
+                if (saved_value && ($(this).val()=="" || this.id == "log_format")) {
                     $(this).val(saved_value);
                 }
             });
@@ -38,6 +68,23 @@ Logs Live Page JS
             if (localStorage.getItem("commands_additional")=="true") {
                 $("#additional_filters_row").show();
             }
+        }
+
+        function init_tooltip() {
+
+            $('body').on('mouseenter', 'p span:not(.tooltipstered)', function(){
+                var sides = ['bottom'];
+                $(this).tooltipster({
+                    plugins: ['sideTip'],
+                    trigger: 'hover',
+                    side: sides,
+                    delay: 0,
+                    contentAsHTML: true,
+                    theme: 'tooltipster-borderless',
+                    animation: 'raise'
+
+                }).tooltipster('open');
+            });
         }
 
         function set_data_from_form() {
@@ -70,8 +117,11 @@ Logs Live Page JS
             }
             var first_batch = (timestamp_val==null);
             timestamp_val = data[0].timestamp; //newest element
+            oldest_timestamp = data[data.length-1].timestamp; //oldest element
             if (timestamp_val && !first_batch) {
-                data.pop(); // remove latest element that is always one that has already been queried.
+                while (data.length && oldest_timestamp && data[data.length-1].timestamp == oldest_timestamp) {
+                    data.pop(); // remove latest element that is always one that has already been queried.
+                }
             }
 
             if (data.length>0) {
@@ -79,7 +129,7 @@ Logs Live Page JS
             }
             data = data.reverse();
             $.each(data, function(i, v) {
-                container.append('<p class="new">'+v.timestamp+' - '+v.message+'</p>');
+                container.append('<p class="new">'+log_format_template(v)+'</p>');
             });
             container.find("p.new").animate({opacity:1}, 500, "swing", function() {
                     $(this).removeClass('new');
@@ -95,6 +145,8 @@ Logs Live Page JS
         }
 
         function refresh_data() {
+            clearTimeout(timer);
+            $('html, body').stop().clearQueue();
             container.html('');
             timestamp_val=null;
             set_data_from_form();
@@ -172,9 +224,15 @@ Logs Live Page JS
 
         init_form();
 
+        init_tooltip();
+
+        update_log_format_template();
+
         additional_filters_button.on('click', on_additional_click);
         commands_input.on('change', on_input_change);
         refresh_rate.on('change', reset_timer);
+        $("#log_format").on('change', on_log_format_change);
+        $("#container").on('click', "p span", on_log_element_click);
 
         get_log_data();
         //timer = setInterval(get_log_data, refresh_rate.val());

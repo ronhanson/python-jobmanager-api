@@ -86,15 +86,18 @@ Logs Live Page JS
         if (job_data.status=='running') {job_dom.find('.general .status i').addClass('fa-refresh fa-spin');}
         if (job_data.status=='pending') {job_dom.find('.general .status i').addClass('fa-clock-o');}
 
-        gauge(job_dom.find('.gauge'), job_data.completion, job_data.completion + "% - " + job_data.status_text);
+        var completion = parseFloat(job_data.completion).toFixed(1);
+        gauge(job_dom.find('.gauge'), completion,  completion + "% - " + job_data.status_text);
 
         job_running = job_dom.removeClass('unfinished finished').addClass(job_status);
         job_running_since = job_dom.find('.since').html(created.fromNow());
+        job_dom.find('.since').attr( 'title', created.format('YYYY-MM-DD HH:mm:ss'));
         job_client_hostname = job_dom.find('.client_hostname').html(job_data.client_hostname);
         job_client_hostname = job_dom.find('.client_uuid').html(job_data.client_uuid);
         job_client_log_button = job_dom.find('.client_logs').data('client_uuid', job_data.client_uuid);
 
-        job_running_for = job_dom.find('.for').html(_now.diff(created, 'hours', true).toFixed(1)+' hours');
+        job_running_for = job_dom.find('.for').html(finished.diff(created, 'hours', true).toFixed(1)+' hours');
+        job_dom.find('.for').attr( 'title', moment.duration(finished.diff(created)).format("HH [hrs] mm [min] ss.SSS [sec] "));
         if (job_data.details) {
             job_details = job_dom.find('.details pre').html(job_data.details+'\n');
             job_dom.find('.details_row').show('quick');
@@ -104,6 +107,7 @@ Logs Live Page JS
 
         if (job_status=='finished') {
             job_dom.find('.dates .stopped').html( 'Finished '+finished.fromNow()+'.');
+            job_dom.find('.dates .stopped').attr( 'title', finished.format('YYYY-MM-DD HH:mm:ss'));
         }
 
         if (job_dom.find('.history table tr').length < job_data.history.length) {

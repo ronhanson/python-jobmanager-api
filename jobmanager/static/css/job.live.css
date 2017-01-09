@@ -11,7 +11,7 @@ Client Live Page CSS
     width: 100%;
     text-align: center;
     display: table;
-    border-spacing: 30px;
+    border-spacing: 20px;
 }
 
 #commands {
@@ -47,6 +47,12 @@ div.job {
     width: 340px;
     vertical-align: top;
 
+}
+
+.small-view div.job {
+    display: block;
+    float: left;
+    margin: 0px 20px 20px 0px;
 }
 
 #container.single div.job {
@@ -315,17 +321,27 @@ table.hist {
 .job table.hist td {
     padding: 2px 5px;
     text-align: left;
+
 }
 .job table.hist td.completion {
     text-align: right;
 }
 
+.job table.hist td.label {
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+}
 table.hist tr.error td {
     background: rgba(200,100,100,0.5);
 }
 
 table.hist tr.success td {
     background: rgba(100,200,100,0.5);
+}
+
+.hist tr:hover {
+    background: rgba(255,255,255,0.2);
 }
 
 .header .gauge.progress {

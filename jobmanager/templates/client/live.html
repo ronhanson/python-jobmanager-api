@@ -24,7 +24,7 @@
             </div>
             <div class="row header">
                 <div class="emboss hostname"><%= client.hostname %></div>
-                <div class="emboss tooltip platform <%= client.platform.system.toLowerCase() %> fa" title="<%= client.platform.version %>"></div>
+                <div class="emboss tooltip platform <%= client.platform.system.toLowerCase() %> fa" title="<%= client.platform.system %> <%= client.platform.release %> (<%= client.platform.version %>)"></div>
                 <div class="emboss tooltip host-info fa fa-info" title="Machine boot : <%= client.boot_time %>"></div>
             </div>
             <div class="row">

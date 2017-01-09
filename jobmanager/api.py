@@ -273,7 +273,8 @@ class JobLogAPI(object):
             return list(self.db.job_logs.map_reduce(
                 Code("""function() { for (var key in this) { emit(key, null); } }"""),
                 Code("""function(key, stuff) { return null; }"""),
-                "job_log_keys"
+                "job_log_keys",
+                limit=10000,
             ).distinct('_id'))
 
         limit = int(request.args.get('limit', 100))
@@ -299,10 +300,8 @@ class JobLogAPI(object):
         ]).get('result')
 
 
-
-@serialize
 def index():
-    return {'url': '<a href="/client/live">/client</a>'}
+    return render_template('index.html', title="Job Manager - Index")
 
 ###
 # Error handling

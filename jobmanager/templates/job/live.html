@@ -40,7 +40,7 @@
                 <div class="dig progress gauge"><div class="complete"></div><div class="percent"></div></div>
             </div>
             <div class="row">
-                <div class="small dates">Started <span class="since">...</span> (Duration - <span class="for">...</span>). <span class="stopped"></span></div>
+                <div class="small dates">Started <span class="since tooltip">...</span> (Duration - <span class="for tooltip">...</span>). <span class="stopped tooltip"></span></div>
             </div>
         </div>
         <div class="column history">
@@ -72,7 +72,7 @@
 <script type="text/template" id="hist_template">
                 <tr class="<%= h.s %>" id="<%= i %>">
                     <td class="datetime" title="<%= h.t %>"><%= moment.duration(moment.utc(h.t) - moment.utc(job.started)).format("mm:ss", { forceLength: true, trim: false }) %></td>
-                    <td class="completion"><%= h.c+'%' %></td>
+                    <td class="completion"><%= parseFloat(h.c).toFixed(1)+'%' %></td>
                     <td class="label"><%= h.m %></td>
                 </tr>
 </script>
