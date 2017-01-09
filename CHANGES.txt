@@ -49,3 +49,4 @@
 2016-12-29	--	v0.9.1	-- Misc fixes and impovments over tooltips, and data updates
 2017-01-03	--	v0.10.0	-- Misc fixes and enhancements. Better log live page with formatting options. BIndex page. Better job small view. Misc corrections.
 2017-01-09	--	v0.10.1	-- Index page + many fixes + Enhanced logging (format and filters)
+2017-01-09	--	v0.10.2	-- Fix on requirements
