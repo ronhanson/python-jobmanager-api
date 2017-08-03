@@ -28,6 +28,35 @@ from datetime import datetime, timedelta
 app = Flask(__name__, static_folder='static', static_url_path='/static', template_folder='templates')
 
 
+def change_keys(obj, convert):
+    """
+    Recursively goes through the dictionary obj and replaces keys with the convert function.
+    """
+    if isinstance(obj, (str, int, float)):
+        return obj
+    if isinstance(obj, dict):
+        new = obj.__class__()
+        for k, v in obj.items():
+            new[convert(k)] = change_keys(v, convert)
+    elif isinstance(obj, (list, set, tuple)):
+        new = obj.__class__(change_keys(v, convert) for v in obj)
+    else:
+        return obj
+    return new
+
+
+def replace_type_cls(key):
+    if key=='type':
+        return '_cls'
+    return key
+
+
+def replace_cls_type(key):
+    if key=='_cls':
+        return 'type'
+    return key
+
+
 def serialize_response(result):
     mimetype = request.accept_mimetypes.best_match(tbx.text.mime_rendering_dict.keys(), default='application/json')
     code = 200
@@ -38,6 +67,7 @@ def serialize_response(result):
         result = result.to_safe_dict()
     assert isinstance(result, dict) or isinstance(result, list)
 
+    result = change_keys(result, replace_cls_type)
     return Response(tbx.text.render_dict_from_mimetype(result, mimetype), status=code, mimetype=mimetype)
 
 
@@ -136,7 +166,8 @@ class JobAPI(MethodView):
             raise Exception("Job has no 'type' field or is not set (value='%s')." % type)
         cls = find_job_type(job_type, module=module)
 
-        new_job = cls.from_json(tbx.text.render_json(data))
+        new_data = change_keys(data, replace_type_cls)
+        new_job = cls.from_json(tbx.text.render_json(new_data))
         new_job.save()
         logging.info("New Job created")
         logging.info(str(new_job))
