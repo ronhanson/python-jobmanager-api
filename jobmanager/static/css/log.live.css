@@ -10,7 +10,7 @@ body { background: black; padding:0 0 80px 0; margin:0;}
     background: #222;
     border: 1px #222 solid;
     font-family: Consolas, sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     min-height: 80%;
 }
 #container p {
@@ -39,10 +39,44 @@ body { background: black; padding:0 0 80px 0; margin:0;}
 #container p span {
     border-radius: 50px;
     background: rgba(255,255,255, 0.2);
-    padding: 3px 10px;
+    padding: 0.3em 0.7em 0.19em 0.7em;
     cursor: pointer;
 }
 
+
+p.level_WARNING {
+    background: rgba(255, 44, 117, 0.15) !important;
+}
+p:nth-child(odd).level_WARNING {
+    background: rgba(255, 44, 117, 0.05) !important;
+}
+
+p.level_WARNING span[data-element="level"] {
+    background: rgba(255, 147, 0, 0.7) !important;
+}
+
+p.level_DEBUG {
+    color: rgb(165, 165, 165);
+}
+p.level_DEBUG:hover {
+    color: #DDD;
+}
+
+p.level_DEBUG span[data-element="level"] {
+    background: rgba(200,200,100,0.2) !important;
+}
+
+p.level_ERROR, p.level_CRITICAL {
+    background: rgba(44, 221, 255, 0.15) !important
+}
+p:nth-child(odd).level_ERROR, p:nth-child(odd).level_CRITICAL {
+    background: rgba(44, 221, 255, 0.05) !important
+}
+
+p.level_ERROR span[data-element="level"], p.level_CRITICAL span[data-element="level"] {
+    background: rgba(255, 44, 44, 0.64) !important;
+}
+
 #container p span:hover {
-    background: rgba(255,255,255, 0.5);
+    background: rgba(255,255,255, 0.5) !important;
 }

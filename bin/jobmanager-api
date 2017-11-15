@@ -50,7 +50,7 @@ def main():
         except KeyboardInterrupt:
             logging.error("Received Keyboard Interrupt. Exiting.")
             exit(1)
-        except mongoengine.ConnectionError:
+        except mongoengine.connection.MongoEngineConnectionError:
             logging.exception("Database connection error to %s. Waiting 10 seconds for retry..." % settings.DATABASE.HOST)
             time.sleep(10)
         except Exception as e:

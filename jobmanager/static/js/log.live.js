@@ -129,7 +129,7 @@ Logs Live Page JS
             }
             data = data.reverse();
             $.each(data, function(i, v) {
-                container.append('<p class="new">'+log_format_template(v)+'</p>');
+                container.append('<p class="new level_'+v.level+'">'+log_format_template(v)+'</p>');
             });
             container.find("p.new").animate({opacity:1}, 500, "swing", function() {
                     $(this).removeClass('new');

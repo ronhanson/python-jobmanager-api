@@ -9,11 +9,18 @@
     <table>
         <tr><td><label><i class="fa fa-fw fa-chevron-circle-down"></i>Follow</label></td><td><input type="checkbox" name="follow_checkbox" id="follow_checkbox" checked /></td></tr>
         <tr><td><label><i class="fa fa-fw fa-clock-o"></i>Refresh Rate</label></td><td><input type="number" name="refresh_rate" id="refresh_rate" value="2000" min="200" /></td></tr>
-        <tr><td><label><i class="fa fa-fw fa-tasks"></i>Log Format </label></td><td><input type="text" name="log_format" id="log_format" value="timestamp hostname job_type job_uuid"/></td></tr>
+        <tr><td><label><i class="fa fa-fw fa-tasks"></i>Log Format </label></td><td><input type="text" name="log_format" id="log_format" value="timestamp hostname job_type job_uuid level"/></td></tr>
         <tr><td colspan="2" id="additional_filters_button"><label><i class="fa fa-fw fa-filter"></i>Additional filters</label></td></tr>
         <tr id="additional_filters_row" style="display:none;"><td colspan="2">
             <form id="filters">
                 <table id="filters_table">
+                    <tr><td><label>Level</label></td><td><select id="level" name="level">
+                        <option value="DEBUG" >DEBUG</option>
+                        <option value="INFO" selected>INFO</option>
+                        <option value="WARNING" >WARNING</option>
+                        <option value="ERROR" >ERROR</option>
+                        <option value="CRITICAL" >CRITICAL</option>
+                    </select></td></tr>
                     <tr><td><label>Hostname         </label></td><td><input type="text" name="hostname" value="{{hostname}}" /></td></tr>
                     <tr><td><label>Log name         </label></td><td><input type="text" name="log_name" value="{{log_name}}"/></td></tr>
                     <tr><td><label>Application      </label></td><td><input type="text" name="application" value="{{application}}"/></td></tr>

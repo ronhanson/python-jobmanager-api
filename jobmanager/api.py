@@ -46,19 +46,21 @@ def change_keys(obj, convert):
 
 
 def replace_type_cls(key):
-    if key=='type':
+    if key == 'type':
         return '_cls'
     return key
 
 
 def replace_cls_type(key):
-    if key=='_cls':
+    if key == '_cls':
         return 'type'
     return key
 
 
 def serialize_response(result):
     mimetype = request.accept_mimetypes.best_match(tbx.text.mime_rendering_dict.keys(), default='application/json')
+    if request.args.get('format') and request.args.get('format') in tbx.text.mime_shortcuts.keys():
+        mimetype = tbx.text.mime_shortcuts.get(request.args.get('format'))
     code = 200
 
     if isinstance(result, BaseDocument):
@@ -269,6 +271,7 @@ class JobLogAPI(object):
     def get_logs(self, filters=None):
         limit = int(request.args.get('limit', 1000))
         since = request.args.get('since', None)
+        level = request.args.get('level', None)
         if not filters:
             filters = {
                 'hostname': request.args.get('hostname', None),
@@ -283,6 +286,10 @@ class JobLogAPI(object):
         if since:
             since = arrow.get(since).datetime
             filters["timestamp"] = {"$gte": since}
+        levels = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
+        if level and (level in levels):
+            allowed_levels = levels[levels.index(level):]
+            filters['level'] = {'$in': allowed_levels}
         return self.db.job_logs.find(filters).sort([('timestamp', -1)]).limit(limit)
 
     @serialize
