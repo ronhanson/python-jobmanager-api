@@ -16,6 +16,7 @@ import mongoengine.connection
 from jobmanager.common.job import SerializableQuerySet, BaseDocument, Job, Client, ClientStatus
 import tbx
 import tbx.text
+import tbx.code
 import logging
 import arrow
 import traceback
@@ -158,6 +159,17 @@ class JobAPI(MethodView):
                 raise Exception("Job %s not found" % uuid)
             args['job_uuid'] = job.uuid
         return render_template('job/live.html', title="Job Manager - %s Job view" % (uuid), **args)
+
+    @classmethod
+    @serialize
+    def doc(cls, job_class_name=''):
+        if job_class_name:
+            job_class = find_job_type(job_class_name)
+            if not job_class:
+                raise Exception("Job %s not found" % job_class_name)
+            return job_class.get_doc()
+        else:
+            return {j.__name__: j.__doc__.strip() for j in tbx.code.get_subclasses(Job)}
 
     def post(self):
         data = request.data.decode('UTF-8')
@@ -381,7 +393,9 @@ def page_not_found(e):
 def run_api(host='0.0.0.0', port=5000, debug=False):
     register_api(JobAPI, 'job_api', '/job/', pk='uuid')
     app.add_url_rule('/job/live/', endpoint='job_view', view_func=JobAPI.live, methods=['GET'])
+    app.add_url_rule('/job/doc/', endpoint='job_doc', view_func=JobAPI.doc, methods=['GET'])
     app.add_url_rule('/job/live/<string(length=11):uuid>', endpoint='job_view', view_func=JobAPI.live, methods=['GET'])
+    app.add_url_rule('/job/doc/<string:job_class_name>', endpoint='job_doc', view_func=JobAPI.doc, methods=['GET'])
 
     register_api(ClientAPI, 'client_api', '/client/', pk='uuid')
     app.add_url_rule('/client/live/', endpoint='client_live', view_func=ClientAPI.live, methods=['GET'])

@@ -52,3 +52,4 @@
 2017-01-09	--	v0.10.2	-- Fix on requirements
 2017-08-04	--	v0.10.3	-- Version bump
 2017-11-15	--	v0.10.4	-- Added log highlights features
+2017-11-17	--	v0.11.0	-- New Job Autodoc feature. WIP.
