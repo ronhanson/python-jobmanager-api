@@ -1,2 +1,2 @@
-jobmanager-common >= 0.9.0
+jobmanager-common >= 0.12.0
 flask >= 0.10
