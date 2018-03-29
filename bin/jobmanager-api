@@ -13,6 +13,7 @@ import time
 import logging
 import configargparse
 import jobmanager.api
+import jobmanager.common
 import mongoengine
 import tbx
 import tbx.log
@@ -58,7 +59,7 @@ def configure_logging(verbosity, quiet=False, log_file=None, db_host=None, db_po
     return logger
 
 
-def run(db_host, db_port, db_name, http_bind, http_port, http_debug, log_file=None):
+def run(db_host, db_port, db_name, http_bind, http_port, http_debug, job_imports):
 
     # Bind restart signal
     def restart_app(sig, stack):
@@ -69,6 +70,9 @@ def run(db_host, db_port, db_name, http_bind, http_port, http_debug, log_file=No
 
     while True:
         try:
+            jobmanager.common.safely_import_from_name(job_imports)
+            logging.info("Successful imports: %s" % (", ".join(job_imports)))
+
             mongoengine.connect(host=db_host, port=db_port, db=db_name)
             logging.info("Connected to database %s@%s:%d" % (db_name, db_host, db_port))
 
@@ -131,6 +135,11 @@ def main():
     http_group.add_argument('-a', '--app-name', help='Application name (displayed on web interface).')
     http_group.add_argument('--debug', action="store_true", default=False, help='Activate HTTP debug output.')
 
+    slots_group = parser.add_argument_group('Imports options')
+    slots_group.add_argument('-i', '--imports', metavar='module', type=str, nargs='+', required=True,
+                             help='Configure current host to import one or multiple python module at startup. '
+                                  'Should not be empty.')
+
     log_group = parser.add_argument_group('Log output')
     log_group.add_argument('-l', '--log-file', type=configargparse.FileType('w'), default=None, help='Optionally log to file.')
     log_group.add_argument('-q', '--quiet', action="store_true", default=False, help='Do not output on screen.')
@@ -174,7 +183,7 @@ def main():
         http_bind=args.get('http_bind'),
         http_port=int(args.get('http_port')),
         http_debug=args.get('debug'),
-        log_file=log_file
+        job_imports=args.get('imports')
     )
     run()
     exit(0)
