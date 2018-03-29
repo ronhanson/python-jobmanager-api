@@ -21,7 +21,7 @@ Client Live Page CSS
     transition: background 0.2s;
     cursor: pointer;
     opacity: 0.5;
-    top: 10px;
+    top: 50px;
     right: 10px;
 }
 
@@ -152,11 +152,14 @@ div.job > div {
 
 .row.header > div {
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
     line-height: 17px;
     display: table-cell;
     text-align: left;
+}
+
+.row.header .hostname, .row.header .percent {
+    text-overflow: ellipsis;
 }
 
 .emboss {

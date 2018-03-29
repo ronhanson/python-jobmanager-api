@@ -7,7 +7,7 @@ Logs Live Page JS
 (function($){
     timer = null;
     job_template_compiled = null;
-    clients = {};
+    hosts = {};
 
     function get_job_data() {
         var job_uuid = $('#container').data('job_uuid');
@@ -92,9 +92,10 @@ Logs Live Page JS
         job_running = job_dom.removeClass('unfinished finished').addClass(job_status);
         job_running_since = job_dom.find('.since').html(created.fromNow());
         job_dom.find('.since').attr( 'title', created.format('YYYY-MM-DD HH:mm:ss'));
-        job_client_hostname = job_dom.find('.client_hostname').html(job_data.client_hostname);
-        job_client_hostname = job_dom.find('.client_uuid').html(job_data.client_uuid);
-        job_client_log_button = job_dom.find('.client_logs').data('client_uuid', job_data.client_uuid);
+        if (job_data.host) {
+            job_host_hostname = job_dom.find('.hostname').html(job_data.host.hostname);
+            job_host_log_button = job_dom.find('.host_logs').data('hostname', job_data.host.hostname);
+        }
 
         job_running_for = job_dom.find('.for').html(finished.diff(created, 'hours', true).toFixed(1)+' hours');
         job_dom.find('.for').attr( 'title', moment.duration(finished.diff(created)).format("HH [hrs] mm [min] ss.SSS [sec] "));
@@ -155,7 +156,7 @@ Logs Live Page JS
             $('#container').removeClass('small-view').addClass('full-view');
             $("#commands").find('.fa').removeClass('fa-eye-slash').addClass('fa-eye');
 			try { localStorage.setItem('view', 'full'); } catch(e) {}
-			$.each(clients, function(id, c) {
+			$.each(hosts, function(id, c) {
 			    c.last_update = null;
 			});
         }

@@ -54,3 +54,4 @@
 2017-11-15	--	v0.10.4	-- Added log highlights features
 2017-11-17	--	v0.11.0	-- New Job Autodoc feature. WIP.
 2017-11-17	--	v0.11.1	-- Fix on requirements
+2018-03-29	--	v0.13.0-beta	-- Big Refactoring. New command line. No more config file only, but environment and config capabilities.  Work in progress. Dockerized too.

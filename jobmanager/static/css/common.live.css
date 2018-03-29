@@ -4,10 +4,55 @@ Live Pages CSS
 @author Ronan Delacroix
 */
 
-body, table { padding:0 0 0 0; margin:0; font-family: sans-serif;}
+body, table {  margin:0; font-family: sans-serif;}
 body { background: black; }
 table { color: inherit; border-spacing : 0; border-collapse : collapse; }
 table tr td, table tr th { padding: 0; }
+a:visited { color: inherit; }
+
+@font-face {
+    font-family: 'starway';
+    src: url('/static/starway-light.otf') format('truetype');
+}
+
+body > #header {
+    top: 0px;
+    display: block;
+    position: fixed;
+    color: white;
+    width: 100%;
+    line-height: 1.1em;
+    padding: 7px 20px 2px 20px;
+    background: #222;
+    background: #485563;
+    background: -webkit-linear-gradient(to left, #485563 , #29323c);
+    background: linear-gradient(to left, #485563 , #29323c);
+    box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.8);
+    font-size: 1.8em;
+    font-weight: normal;
+    z-index: 3;
+}
+
+body > #header #logo{
+    display: inline-block;
+    font-family: 'starway';
+}
+
+body > #header #logo::before {
+    content: "\f0c3";
+    font-family: FontAwesome;
+    padding: 0 8px 0 0;
+    font-size: 0.75em;
+    color: rgba(139, 195, 75, 0.8);
+}
+
+body > #header #subtitle {
+    display: none;
+}
+
+#header + #container {
+    margin-top: 30px;
+}
 
 #container {
     color: #DDD;
@@ -21,7 +66,7 @@ table tr td, table tr th { padding: 0; }
 
 #commands {
     position:fixed;
-    top:20px;
+    top:50px;
     right:20px;
     padding:20px;
     background:#222;

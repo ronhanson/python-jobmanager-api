@@ -3,8 +3,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/smoothie/1.27.0/smoothie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" type="text/css" media="all">
-    <link href="/static/css/client.live.css" rel="stylesheet" type="text/css" media="all">
-    <script src="/static/js/client.live.js"></script>
+    <link href="/static/css/host.live.css" rel="stylesheet" type="text/css" media="all">
+    <script src="/static/js/host.live.js"></script>
 {% endblock %}
 {% block body %}
 <div id="container" class="small-view"></div>
@@ -12,26 +12,30 @@
     <i class="fa fa-eye-slash fa-fw fa-2x"></i>
 </div>
 
-<script type="text/template" id="client_template">
-    <div class="client loading" id="<%= client.uuid %>">
+<script type="text/template" id="host_template">
+    <div class="host loading" id="<%= host.hostname.replace(' ', '-').replace('.', '-') %>">
         <div class="loader"><i class="fa fa-circle-o-notch fa-spin fa-5x fa-fw"></i></div>
         <div class="column general">
             <div class="row header">
-                <div class="emboss uuid" title="Client ID"><%= client.uuid %></div>
-                <div class="emboss status pause" title="Status"><i class="fa fa-pause"></i></div>
-                <div class="emboss logs button" data-client_uuid="<%= client.uuid %>" title="View Client Logs"><i class="fa fa-align-left"></i></div>
-                <div class="emboss tooltip client-info fa fa-info" title="Client PID <%= client.pid %> - started on <%= client.created %>"></div>
+                <div class="emboss tooltip platform <%= host.platform.system.toLowerCase() %> fa" title="<%= host.platform.system %> <%= host.platform.release %> (<%= host.platform.version %>)"></div>
+                <div class="emboss uuid" title="Hostname"><%= host.hostname %></div>
             </div>
             <div class="row header">
-                <div class="emboss hostname"><%= client.hostname %></div>
-                <div class="emboss tooltip platform <%= client.platform.system.toLowerCase() %> fa" title="<%= client.platform.system %> <%= client.platform.release %> (<%= client.platform.version %>)"></div>
-                <div class="emboss tooltip host-info fa fa-info" title="Machine boot : <%= client.boot_time %>"></div>
+                <div class="emboss status pause" title="Status"><i class="fa fa-pause"></i></div>
+                <div class="emboss logs button" data-hostname="<%= host.hostname %>" title="View Hostname Logs"><i class="fa fa-align-left"></i></div>
+                <div class="emboss tooltip host-info fa fa-info" title="Client PID <%= host.pid %> - started on <%= host.created %>"></div>
             </div>
             <div class="row">
-                <div class="small dates">Started <span class="since">...</span> (<span class="for">...</span>). <span class="stopped"></span></div>
+                <div class="small boot">Machine boot : <%= host.boot_time %> (<span class="for">...</span>). </div>
             </div>
             <div class="row">
-                <div class="small python">Python <span class="version"><%= client.python_version %></span> <span class="fa fa-info tooltip tooltip-right" title="<%= client.python_packages.join('<br/>') %>"></span></div>
+                <div class="small os">OS : <%= host.platform.system %> <%= host.platform.release %>. </div>
+            </div>
+            <div class="row">
+                <div class="small dates">Client started <span class="since">...</span> (<span class="for">...</span>). <span class="stopped"></span></div>
+            </div>
+            <div class="row">
+                <div class="small python">Python <span class="version"><%= host.python_version %></span> <span class="fa fa-info tooltip tooltip-right" title="<%= host.python_packages.join('<br/>') %>"></span></div>
             </div>
             <div class="row">
                 <div class="small job_types"><ul></ul></div>

@@ -1,0 +1,596 @@
+/*
+Job Manager API
+Host Live Page CSS
+@author Ronan Delacroix
+*/
+
+#container {
+    background: #222;
+    position: absolute;
+    width: 100%;
+}
+
+#commands {
+    padding: 10px 6px;
+    border-radius: 50%;
+    border-width: 3px;
+    transition: background 0.2s;
+    cursor: pointer;
+    opacity: 0.5;
+    top: 50px;
+    right: 10px;
+}
+
+#commands:hover {
+    background:rgba(100,100,100,1.0);
+    opacity: 1.0;
+}
+
+div.host {
+    margin: 20px 0px 0px 20px;
+    background: #222;
+    /* border: solid 1px #444; */
+    background: #485563;
+    background: -webkit-linear-gradient(to left, #485563 , #29323c);
+    background: linear-gradient(to left, #485563 , #29323c);
+    position: relative;
+    padding: 10px 20px 10px 20px;
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.8), inset 0px 1px 3px -1px rgba(255,255,255,0.8);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+#container.full-view div.host {
+    margin: 20px 20px 0px 20px;
+}
+
+#container.small-view div.host {
+    float: left;
+    margin: 20px 0px 0px 20px;
+    min-height: 200px;
+}
+
+div.host.loading {
+    -webkit-filter: blur(1px); /* Safari */
+    filter: blur(1px);
+}
+
+div.host.dead {
+    opacity: 0.7;
+}
+
+div.host.dead:hover {
+    opacity: 1.0;
+}
+
+#container.small-view div.column.statistics, #container.small-view div.column.jobs {
+    display: none;
+}
+
+div.host .loader {
+    opacity: 0.0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 1.3em;
+    top: 0px;
+    left: 0px;
+    font-size: 2em;
+    color: rgba(20,20,20, 0.5);
+    display: none;
+}
+div.host.loading .loader {
+    opacity: 1;
+    display: table-cell;
+}
+
+
+div.host > div {
+    /*
+    padding: 2px 15px;
+    */
+}
+
+.column {
+    float: left;
+    margin: 0px 7px 0px 7px;
+}
+
+.column.general, .column.statistics {
+    width: 330px;
+}
+.dead .column.statistics {
+    opacity: 0.3;
+}
+
+.column.jobs {
+    float: none;
+    overflow: hidden;
+    text-align: left;
+}
+
+
+.header div {
+    padding: 7px 15px 7px 15px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.header div:first-child {
+    border-radius: 30px 0px 0px 30px;
+}
+
+.header div:last-child {
+    border-radius: 0px 30px 30px 0px;
+}
+
+.row {
+    margin: 10px 0px;
+}
+
+.row.header {
+    position: relative;
+    left: -10px;
+    width: 340px;
+    display: table;
+    border-spacing: 8px 4px;
+    table-layout: fixed;
+    margin: 0px;
+}
+
+.row.header div {
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 17px;
+    display: table-cell;
+    text-overflow: initial;
+    /*text-overflow: ellipsis;*/
+}
+
+.emboss {
+    box-shadow: 0px 1px 5px 1px rgba(0,0,0,0.5), inset 0px 1px 2px -1px rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.08);
+    transition: all 0.2s;
+}
+.button {
+    cursor: pointer;
+}
+.tooltip {
+    cursor: help;
+}
+.emboss.button:hover , .emboss.tooltip:hover {
+    background: rgba(255,255,255,0.1);
+    box-shadow: 1px 1px 8px 2px rgba(0,0,0,0.8), inset 0px 1px 3px -1px rgba(255,255,255,0.8);
+}
+
+.alive .header .uuid {
+    background : rgba(82, 193, 95, 0.8);
+}
+.dead .header .uuid {
+    background : rgba(193, 86, 82, 0.5);
+}
+
+.header .uuid.dead:before {
+    content: "\2625 ";
+    display: inline-block;
+    font-size: 1.5em;
+    font-weight: 900;
+    margin-right: 10px;
+    line-height: 0.5em;
+}
+
+.header .host-info, .header .client-info, .header .status {
+    width: 10px;
+    padding: 7px 12px 7px 10px;
+    transition: all 0.5s;
+}
+
+@keyframes pulse {
+  50% { background-color: rgba(82, 220, 95, 0.4) }
+}
+
+.header .status.play {
+    background : rgba(82, 193, 95, 0.8);
+    animation: pulse 1s ease-in-out infinite;
+}
+.header .status.pause {
+    background: rgba(210,190,51,0.1);
+    color: #222222;
+}
+.header .status.stop {
+    background: rgba(193, 86, 82, 0.5);
+}
+
+.header .platform {
+    width: 10px;
+    padding: 7px 12px 7px 10px;
+    font-weight: normal;
+}
+
+.header .button.logs {
+    width: 10px;
+    padding: 7px 12px 7px 10px;
+}
+
+.python span.fa {
+    border-radius: 12px;
+    display: inline-block;
+    padding: 5px 8px;
+    margin: 0px 8px 5px 0px;
+    box-shadow: 0 0 5px 1px rgba(0,0,0,.6), inset 0px 1px 3px -1px rgba(255,255,255,0.5);
+}
+
+.job_types ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+.job_types .tag {
+    /*background: #788593;*/
+    border-radius: 3px;
+    display: inline-block;
+    float: left;
+    padding: 5px 8px;
+    margin: 0px 5px 5px 0px;
+
+    box-shadow: inset 0 0 5px 1px rgba(0,0,0,.6), 0px 1px 3px -1px rgba(255,255,255,0.5);
+}
+
+.platform.windows::before {
+    content: "\f17a";
+}
+.platform.darwin::before {
+    content: "\f179";
+}
+.platform.linux::before {
+    content: "\f17c";
+}
+
+.small {
+    font-size: x-small;
+    margin: 0 0 5px 0;
+}
+
+.job_slot {
+    float: left;
+    box-shadow: inset 0 0 5px rgba(0,0,0,.5);
+    height: 100%;
+    min-width: 180px;
+    margin: 0px 5px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 10px;
+
+}
+
+.jobs .title {
+    position: absolute;
+    transform: rotate(-90deg) translateX(-160px);
+    transform-origin: left top 0;
+    width: 160px;
+    text-align: center;
+}
+
+.job_pool {
+
+}
+.job_pool ul {
+    list-style: none;
+    padding: 0px 10px;
+    margin: 0px;
+    border-radius: 5px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,.5);
+
+    padding: 10px;
+    overflow-x: auto;
+    height: 140px;
+    margin-left: 30px;
+    background: rgba(0,0,0,0.1);
+}
+
+.host table {
+    width: 100%;
+}
+.host table td {
+    text-align: right;
+}
+.host table td.label {
+    text-align: right;
+}
+
+.gauge {
+    /*border: solid 1px #444;
+    background: #000;*/
+    margin: 2px 10px;
+    position: relative;
+    height: 40px;
+    width: 30px;
+    display: block;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.1);
+    box-shadow: inset 0 0 5px 1px rgba(0,0,0,.5);
+    overflow: hidden;
+}
+.gauge .complete {
+    /*border: solid 1px #444;*/
+    background: rgb(82, 193, 95);
+    position: relative;
+    font-family: Consolas, sans-serif;
+    font-size: 0.8em;
+    line-height: 20px;
+    transition: height 1s, top 1s, background 1s;
+    width: 30px;
+    border-radius: 4px;
+    box-shadow: inset 0 0 3px rgba(0,0,0,.2), 0 0 6px rgba(0,0,0,.6);
+}
+
+.gauge .complete.very-high {
+    background: #da4a4a;
+    background: linear-gradient(to top, #52c15f, #52c15f 30%, #d2be33 70%, #da4a4a 90%);
+}
+.gauge .complete.high {
+    background: #d2be33;
+    background: linear-gradient(to top, #52c15f, #52c15f 40%, #d2be33 90%);
+}
+
+.chart canvas {
+    border-radius: 5px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,.5);
+    margin: 0px 3px;
+}
+
+
+.gauge .percent {
+    display: block;
+    z-index: 10;
+    top: 50%;
+    position: absolute;
+    transform: translateY(-30%);
+    font-size: xx-small;
+    width: 100%;
+    text-align: center;
+    text-shadow: 0 0.5px 1px rgba(0,0,0,0.5);
+}
+
+.chart-selector {
+    width: 100px;
+}
+.chart-selector span{
+    float: left;
+    display: inline-block;
+    padding: 2px 4px;
+    margin: 2px 2px;
+    font-size: 0.4em;
+    box-shadow: inset 0 0 5px rgba(0,0,0,.5), 0 0 5px rgba(0,0,0,.0);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: box-shadow 0.2s, background 0.2s;
+}
+
+.chart-selector span:hover, .chart-selector span.selected{
+    box-shadow: inset 0 0 5px rgba(0,0,0,.0), 0 0 5px rgba(0,0,0,.5);
+    background: rgba(255,255,255,0.3);
+}
+
+.jobs .stats {
+    margin-left: 30px;
+
+}
+
+.jobs .stat {
+    box-shadow: 0px 1px 5px rgba(0,0,0,.5), inset 0px 1px 1px rgba(255,255,255,.5), inset 0px -1px 1px rgba(0,0,0,.5);
+    color: rgba(0,0,0,0.5);
+    background: rgba(255,255,255,0.15);
+    border-radius: 50px;
+    display: block;
+    width: 60px;
+    height: 60px;
+    font-size: 0.6em;
+    text-align: center;
+    font-weight: bold;
+}
+.jobs div.stat > div {
+    background: rgb(64,76,87);
+    display: block;
+    width: 80%;
+    margin: auto;
+    border-radius: 50%;
+    height: 80%;
+    top: 10%;
+    position: relative;
+    box-shadow: inset 0px 1px 5px -1px rgba(0,0,0,.5), 0px 1px 1px rgba(255,255,255,.5), 0px -1px 1px rgba(0,0,0,.5);
+    padding-top: 16%;
+    box-sizing: border-box;
+}
+
+.jobs .success .stat {
+    background: rgba(96,195,97,0.8);
+    color: rgba(18, 212, 20, 0.8);
+}
+.jobs .error .stat {
+    background: rgba(255, 75, 51, 0.5);
+    color: rgba(245, 81, 59, 0.8);
+}
+.jobs .running .stat {
+    background: rgba(245, 233, 54, 0.8);
+    color: rgba(239, 230, 96, 0.8);
+}
+
+.host.dead .jobs .running {
+    opacity: 0.3;
+}
+
+div.stat .value {
+    display: block;
+    font-size: 1.8em;
+    margin-top: 8%;
+}
+
+.jobs .stats .status {
+    position: relative;
+    margin: 5px;
+    box-shadow: inset 0 0 5px 1px rgba(0,0,0,.5);
+    background: rgba(0,0,0,0.1);
+    border-radius: 500px 0px 0px 500px;
+    overflow: hidden;
+}
+
+.jobs .stats .status:after {
+    background: linear-gradient(to right, rgba(64,75,88, 0.0) 0%, rgb(70,82,96) 100% );
+    display: block;
+    content: "";
+    right: 0px;
+    width: 100px;
+    position: absolute;
+    top: 0px;
+    height: 100%;
+}
+
+.jobs .list {
+    position: absolute;
+    top: 0px;
+    left: 65px;
+    padding: 4px 0px;
+    width: 110%;
+}
+
+.job {
+    color: #DDD;
+    display: inline-block;
+    width: 100px;
+    font-size: 0.6em;
+    position: relative;
+    box-shadow: 0 0 5px rgba(0,0,0,.5);
+    height: 25px;
+    padding: 25px 5px 2px 5px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 5px;
+    text-align: center;
+    margin: 0 5px 5px 5px;
+    overflow: hidden;
+    transition: all 0.2s;
+}
+
+.running .job .completion {
+    display: block;
+    content: "";
+    background: rgba(0,255,0, 0.2);
+    height: 65%;
+    width: 0%;
+    position: absolute;
+    left: 0px;
+    top: 35%;
+    border-radius: 0 0px 0px 5px;
+    transition: width 1s;
+}
+
+.job:hover {
+    box-shadow: 1px 1px 8px 2px rgba(0,0,0,.5);
+    background: rgba(255,255,255,0.25);
+}
+
+.job .uuid {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: rgba(255,255,255, 0.2);
+    padding: 4px;
+    font-weight: bolder;
+    font-size: 1.1em;
+    border-radius: 5px 5px 0px 0px;
+    box-sizing: border-box;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.jobs .success .list .job .uuid {
+    background: rgba(100,255,100, 0.3);
+}
+
+.jobs .error .list .job .uuid {
+    background: rgba(255, 100,100, 0.3);
+}
+`
+.job .created {
+    color: rgba(200,200,200, 0.5);
+}
+
+.job span {
+    display: block;
+}
+
+.job span.created, .job span.type {
+    padding-left: 20px;
+    text-align: left;
+}
+
+.job span.logs {
+    position: absolute;
+    font-size: 1.6em;
+    top: 24px;
+    left: 5px;
+    padding: 3px 3px 2px 2px;
+    transition: background 0.3s;
+    border-radius: 2px;
+    color: rgba(200,200,200,0.3);
+    cursor: pointer;
+}
+.job span.logs:hover {
+    background: rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.8);
+}
+
+.mfp-iframe-holder .mfp-content {
+    max-width: 1900px;
+    width: 100%;
+    height: 90%;
+}
+
+.job_view .mfp-content {
+    width: 500px;
+}
+
+@media only screen and (max-width:1000px) {
+    .column.jobs {
+        float: left;
+        width: 95%;
+        margin-top: 0px;
+    }
+}
+@media only screen and (max-width:782px) {
+
+    .row {
+        display: inline-block;
+        margin: 0px 1px;
+    }
+
+    #container.small-view div.host {
+        width: 89%;
+        min-height: 100px;
+    }
+
+    div.host {
+        text-align: center;
+    }
+
+    .row.header {
+        width: 100%;
+        display: table;
+    }
+    .column {
+        display: inline-block;
+        float: none;
+    }
+
+    .column.general {
+        width: 100%;
+    }
+
+    .column.statistics {
+        margin-top:15px;
+    }
+}

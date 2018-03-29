@@ -1,0 +1,106 @@
+{% extends "common/base.html" %}
+{% block head %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/smoothie/1.27.0/smoothie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/static/css/host.live2.css" rel="stylesheet" type="text/css" media="all">
+    <script src="/static/js/host.live2.js"></script>
+{% endblock %}
+{% block body %}
+<div id="container" class="small-view">
+
+    <div id="app-7">
+      <ul>
+        <host-item
+          v-for="host in hosts"
+          v-bind:host="host"
+          v-bind:key="host.hostname">
+        </host-item>
+      </ul>
+    </div>
+
+</div>
+<div id="commands">
+    <i class="fa fa-eye-slash fa-fw fa-2x"></i>
+</div>
+
+<script type="text/template" id="host_template">
+    <div class="host loading" id="<%= host.hostname.replace(' ', '-').replace('.', '-') %>">
+        <div class="loader"><i class="fa fa-circle-o-notch fa-spin fa-5x fa-fw"></i></div>
+        <div class="column general">
+            <div class="row header">
+                <div class="emboss tooltip platform <%= host.platform.system.toLowerCase() %> fa" title="<%= host.platform.system %> <%= host.platform.release %> (<%= host.platform.version %>)"></div>
+                <div class="emboss uuid" title="Hostname"><%= host.hostname %></div>
+            </div>
+            <div class="row header">
+                <div class="emboss status pause" title="Status"><i class="fa fa-pause"></i></div>
+                <div class="emboss logs button" data-hostname="<%= host.hostname %>" title="View Hostname Logs"><i class="fa fa-align-left"></i></div>
+                <div class="emboss tooltip host-info fa fa-info" title="Client PID <%= host.pid %> - started on <%= host.created %>"></div>
+            </div>
+            <div class="row">
+                <div class="small boot">Machine boot : <%= host.boot_time %> (<span class="for">...</span>). </div>
+            </div>
+            <div class="row">
+                <div class="small os">OS : <%= host.platform.system %> <%= host.platform.release %>. </div>
+            </div>
+            <div class="row">
+                <div class="small dates">Client started <span class="since">...</span> (<span class="for">...</span>). <span class="stopped"></span></div>
+            </div>
+            <div class="row">
+                <div class="small python">Python <span class="version"><%= host.python_version %></span> <span class="fa fa-info tooltip tooltip-right" title="<%= host.python_packages.join('<br/>') %>"></span></div>
+            </div>
+            <div class="row">
+                <div class="small job_types"><ul></ul></div>
+            </div>
+        </div>
+        <div class="column statistics">
+            <table class="stats">
+                <% _.each({slot: 'Slots', cpu: 'CPU', ram: 'RAM', disk: 'Disk'}, function (title, kind) { %>
+                <tr class="<%= kind %>">
+                    <td class="label"><%= title %></td>
+                    <td class="gauge"><div class="complete"></div><div class="percent"></div></td>
+                    <td class="chart"><canvas width="180" height="40" data-time="30"></canvas></td>
+                    <td class="chart-selector">
+                        <span class="char-time" data-time="1">1m</span>
+                        <span class="char-time" data-time="10">10m</span>
+                        <span class="char-time" data-time="30">30m</span>
+                        <span class="char-time selected" data-time="120">2h</span>
+                        <span class="char-time" data-time="720">12h</span>
+                        <span class="char-time" data-time="1440">1d</span>
+                    </td>
+                </tr>
+                <% }); %>
+            </table>
+        </div>
+        <div class="column jobs">
+            <div class="job_pool">
+                <div class="title">Jobs</div>
+                <div class="stats">
+                    <div class="status running">
+                        <div class="stat"><div>Running<span class="value">-</span></div></div>
+                        <div class="list"></div>
+                    </div>
+                    <div class="status success">
+                        <div class="stat"><div>Success<span class="value">-</span></div></div>
+                        <div class="list"></div>
+                    </div>
+                    <div class="status error">
+                        <div class="stat"><div>Error  <span class="value">-</span></div></div>
+                        <div class="list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="job_template">
+    <div class="job" id="<%= job.uuid %>">
+        <div class="completion"></div>
+        <span class="uuid"><%= job.uuid %></span>
+        <span class="type"><%= job.type %></span>
+        <span class="created"><%= job.created %></span>
+        <span class="logs button fa fa-history" data-job_uuid="<%= job.uuid %>" title="View Logs"></span>
+    </div>
+</script>
+{% endblock %}

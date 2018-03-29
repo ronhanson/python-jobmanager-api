@@ -27,16 +27,16 @@
                 <!--<div class="emboss tooltip job-info fa fa-info" title="Started on <%= job.created %>"></div>-->
             </div>
             <div class="row header">
-                <div class="emboss medium_button server" title="Server / Machine"><i class="fa fa-fw fa-server"></i>&nbsp;<label>Server</label></div>
-                <div class="emboss client_hostname"><%= job.client_hostname || '<i class="fa fa-fw fa-cog fa-spin"></i>' %></div>
-            </div>
+                <div class="emboss medium_button server" title="Host / Server / Machine"><i class="fa fa-fw fa-server"></i>&nbsp;<label>Host</label></div>
+                <% if (job.host) { %>
+                <div class="emboss hostname"><%= job.host.hostname || '<i class="fa fa-fw fa-cog fa-spin"></i>' %></div>
+                <div class="emboss small_button host_logs logs button" data-hostname="<%= job.host.hostname %>" title="View Host Logs"><i class="fa fa-align-left"></i></div>
+                <% } else { %>
+                <div class="emboss hostname"><i class="fa fa-fw fa-cog fa-spin"></i> Waiting...</div>
+                <% } %>
+                </div>
             <div class="row header">
-                <div class="emboss medium_button client" title="Client"><i class="fa fa-fw fa-cog"></i>&nbsp;<label>Client</label></div>
-                <div class="emboss client_uuid"><%= job.client_uuid  || '<i class="fa fa-fw fa-cog fa-spin"></i>' %></div>
-                <div class="emboss small_button client_logs logs button" data-client_uuid="<%= job.client_uuid %>" title="View Client Logs"><i class="fa fa-align-left"></i></div>
-            </div>
-            <div class="row header">
-                <div class="emboss medium_button progress" title="Client"><i class="fa fa-fw fa-percent"></i>&nbsp;<label>Progress</label></div>
+                <div class="emboss medium_button progress" title="Progress"><i class="fa fa-fw fa-percent"></i>&nbsp;<label>Progress</label></div>
                 <div class="dig progress gauge"><div class="complete"></div><div class="percent"></div></div>
             </div>
             <div class="row">

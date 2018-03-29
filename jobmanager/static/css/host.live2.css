@@ -1,6 +1,6 @@
 /*
 Job Manager API
-Client Live Page CSS
+Host Live Page CSS
 @author Ronan Delacroix
 */
 
@@ -18,7 +18,7 @@ Client Live Page CSS
     transition: background 0.2s;
     cursor: pointer;
     opacity: 0.5;
-    top: 10px;
+    top: 50px;
     right: 10px;
 }
 
@@ -27,7 +27,7 @@ Client Live Page CSS
     opacity: 1.0;
 }
 
-div.client {
+div.host {
     margin: 20px 0px 0px 20px;
     background: #222;
     /* border: solid 1px #444; */
@@ -41,26 +41,26 @@ div.client {
     overflow: hidden;
 }
 
-#container.full-view div.client {
+#container.full-view div.host {
     margin: 20px 20px 0px 20px;
 }
 
-#container.small-view div.client {
+#container.small-view div.host {
     float: left;
     margin: 20px 0px 0px 20px;
     min-height: 200px;
 }
 
-div.client.loading {
+div.host.loading {
     -webkit-filter: blur(1px); /* Safari */
     filter: blur(1px);
 }
 
-div.client.dead {
+div.host.dead {
     opacity: 0.7;
 }
 
-div.client.dead:hover {
+div.host.dead:hover {
     opacity: 1.0;
 }
 
@@ -68,7 +68,7 @@ div.client.dead:hover {
     display: none;
 }
 
-div.client .loader {
+div.host .loader {
     opacity: 0.0;
     position: absolute;
     width: 100%;
@@ -82,13 +82,13 @@ div.client .loader {
     color: rgba(20,20,20, 0.5);
     display: none;
 }
-div.client.loading .loader {
+div.host.loading .loader {
     opacity: 1;
     display: table-cell;
 }
 
 
-div.client > div {
+div.host > div {
     /*
     padding: 2px 15px;
     */
@@ -143,10 +143,11 @@ div.client > div {
 
 .row.header div {
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
     line-height: 17px;
     display: table-cell;
+    text-overflow: initial;
+    /*text-overflow: ellipsis;*/
 }
 
 .emboss {
@@ -289,13 +290,13 @@ div.client > div {
     background: rgba(0,0,0,0.1);
 }
 
-.client table {
+.host table {
     width: 100%;
 }
-.client table td {
+.host table td {
     text-align: right;
 }
-.client table td.label {
+.host table td.label {
     text-align: right;
 }
 
@@ -417,7 +418,7 @@ div.client > div {
     color: rgba(239, 230, 96, 0.8);
 }
 
-.client.dead .jobs .running {
+.host.dead .jobs .running {
     opacity: 0.3;
 }
 
@@ -437,7 +438,7 @@ div.stat .value {
 }
 
 .jobs .stats .status:after {
-    background: linear-gradient(to right, rgba(64,75,88, 0.0) , rgba(64,75,88, 1.0) 83% );
+    background: linear-gradient(to right, rgba(64,75,88, 0.0) 0%, rgb(70,82,96) 100% );
     display: block;
     content: "";
     right: 0px;
@@ -561,12 +562,12 @@ div.stat .value {
     }
 }
 @media only screen and (max-width:782px) {
-    #container.small-view div.client {
+    #container.small-view div.host {
         width: 89%;
         min-height: 100px;
     }
 
-    div.client {
+    div.host {
         text-align: center;
     }
 
