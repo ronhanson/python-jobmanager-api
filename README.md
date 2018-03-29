@@ -74,23 +74,19 @@ Use jobmanager-api script :
 
 Command lines parameters are as follow :    
 
-    usage: jobmanager-builder -s SERVER [-p PORT] [-d DATABASE] [-b HTTP_BIND]
-                              [-o HTTP_PORT] [-a APP_NAME] [--debug]
-                              [-r REGISTRY URL] [-ru REGISTRY USERNAME]
-                              [-rp REGISTRY PASSWORD] [-i BASE IMAGE]
-                              [-l LOG_FILE] [-q]
-                              [-v {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                              [-c CONFIG_FILE]
-                              [--create-config-file CONFIG_OUTPUT_PATH] [-h]
-                              [--version]
+    usage: jobmanager-api -s SERVER [-p PORT] [-d DATABASE] [-b HTTP_BIND]
+                          [-o HTTP_PORT] [-a APP_NAME] [--debug] [-l LOG_FILE]
+                          [-q] [-v {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+                          [-c CONFIG_FILE]
+                          [--create-config-file CONFIG_OUTPUT_PATH] [-h]
+                          [--version]
     
-    Job Manager Docker Image Builder API Args that start with '--' (eg. -s) can
-    also be set in a config file (/etc/jobmanager/builder.yaml or ./builder.yaml
-    or specified via -c). The config file uses YAML syntax and must represent a
-    YAML 'mapping' (for details, see http://learn.getgrav.org/advanced/yaml). If
-    an arg is specified in more than one place, then commandline values override
-    environment variables which override config file values which override
-    defaults.
+    Job Manager API Args that start with '--' (eg. -s) can also be set in a config
+    file (/etc/jobmanager/api.yaml or ./api.yaml or specified via -c). The config
+    file uses YAML syntax and must represent a YAML 'mapping' (for details, see
+    http://learn.getgrav.org/advanced/yaml). If an arg is specified in more than
+    one place, then commandline values override environment variables which
+    override config file values which override defaults.
     
     Job Database:
       -s SERVER, --server SERVER
@@ -106,43 +102,25 @@ Command lines parameters are as follow :
     HTTP Server options:
       -b HTTP_BIND, --http-bind HTTP_BIND
                             Server IP address bindings. [env var:
-                            JOBMANAGER_BUILDER_HTTP_BIND] (default: 0.0.0.0)
+                            JOBMANAGER_API_HTTP_BIND] (default: 0.0.0.0)
       -o HTTP_PORT, --http-port HTTP_PORT
-                            Port to bind. [env var: JOBMANAGER_BUILDER_HTTP_PORT]
-                            (default: 5001)
+                            Port to bind. [env var: JOBMANAGER_API_HTTP_PORT]
+                            (default: 5000)
       -a APP_NAME, --app-name APP_NAME
                             Application name (displayed on web interface). [env
-                            var: JOBMANAGER_BUILDER_APP_NAME] (default: None)
+                            var: JOBMANAGER_API_APP_NAME] (default: None)
       --debug               Activate HTTP debug output. [env var:
-                            JOBMANAGER_BUILDER_DEBUG] (default: False)
-    
-    Docker registry options:
-      -r REGISTRY URL, --registry-url REGISTRY URL
-                            Docker registry url. Registry where to push newly
-                            built images. [env var:
-                            JOBMANAGER_DOCKER_REGISTRY_URL] (default: None)
-      -ru REGISTRY USERNAME, --registry-username REGISTRY USERNAME
-                            Docker registry username for login in. If not set, it
-                            will bypass login. [env var:
-                            JOBMANAGER_DOCKER_REGISTRY_USERNAME] (default: None)
-      -rp REGISTRY PASSWORD, --registry-password REGISTRY PASSWORD
-                            Docker registry password for login in. [env var:
-                            JOBMANAGER_DOCKER_REGISTRY_PASSWORD] (default: None)
-      -i BASE IMAGE, --base-image BASE IMAGE
-                            Base Docker image of Job Manager Client to build upon.
-                            (default: ronhanson/jobmanager-client:latest) [env
-                            var: JOBMANAGER_CLIENT_DOCKER_BASE_IMAGE] (default:
-                            None)
+                            JOBMANAGER_API_DEBUG] (default: False)
     
     Log output:
       -l LOG_FILE, --log-file LOG_FILE
                             Optionally log to file. [env var:
-                            JOBMANAGER_BUILDER_LOG_FILE] (default: None)
+                            JOBMANAGER_API_LOG_FILE] (default: None)
       -q, --quiet           Do not output on screen. [env var:
-                            JOBMANAGER_BUILDER_QUIET] (default: False)
+                            JOBMANAGER_API_QUIET] (default: False)
       -v {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --verbosity {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                             Log verbosity to screen. [env var:
-                            JOBMANAGER_BUILDER_VERBOSITY] (default: INFO)
+                            JOBMANAGER_API_VERBOSITY] (default: INFO)
     
     Config file:
       -c CONFIG_FILE, --config-file CONFIG_FILE
@@ -155,7 +133,7 @@ Command lines parameters are as follow :
     Miscellaneous commands:
       -h, --help            show this help message and exit.
       --version             show program's version number and exit [env var:
-                            JOBMANAGER_BUILDER_VERSION]
+                            JOBMANAGER_API_VERSION]
     
     "According to this program calculations, there is no such things as too much
     wine."
