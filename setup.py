@@ -18,10 +18,6 @@ setup(
     include_package_data=True,
     package_data={}, #done in MANIFEST.in
     scripts=['bin/jobmanager-api'],
-    data_files=[
-        ('/etc/jobmanager', ['bin/api.ini', 'bin/api.spec']),
-        ('/var/log/jobmanager', [])
-    ],
     license=open('LICENCE.txt').read().strip(),
     description='Job Manager API',
     long_description=open('README.md').read().strip(),

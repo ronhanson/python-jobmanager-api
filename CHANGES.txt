@@ -57,3 +57,4 @@
 2018-03-29	--	v0.13.0-beta	-- Big Refactoring. New command line. No more config file only, but environment and config capabilities.  Work in progress. Dockerized too.
 2018-03-29	--	v0.13.1-beta	-- Readme fix
 2018-03-29	--	v0.13.2-beta	-- Added imports
+2018-07-06	--	v0.13.3	-- Fix

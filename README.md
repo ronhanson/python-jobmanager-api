@@ -75,8 +75,9 @@ Use jobmanager-api script :
 Command lines parameters are as follow :    
 
     usage: jobmanager-api -s SERVER [-p PORT] [-d DATABASE] [-b HTTP_BIND]
-                          [-o HTTP_PORT] [-a APP_NAME] [--debug] [-l LOG_FILE]
-                          [-q] [-v {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+                          [-o HTTP_PORT] [-a APP_NAME] [--debug] -i module
+                          [module ...] [-l LOG_FILE] [-q]
+                          [-v {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                           [-c CONFIG_FILE]
                           [--create-config-file CONFIG_OUTPUT_PATH] [-h]
                           [--version]
@@ -111,6 +112,12 @@ Command lines parameters are as follow :
                             var: JOBMANAGER_API_APP_NAME] (default: None)
       --debug               Activate HTTP debug output. [env var:
                             JOBMANAGER_API_DEBUG] (default: False)
+    
+    Imports options:
+      -i module [module ...], --imports module [module ...]
+                            Configure current host to import one or multiple
+                            python module at startup. Should not be empty. [env
+                            var: JOBMANAGER_API_IMPORTS] (default: None)
     
     Log output:
       -l LOG_FILE, --log-file LOG_FILE
