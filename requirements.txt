@@ -1,4 +1,4 @@
-jobmanager-common >= 0.13.5
+jobmanager-common >= 0.13.8
 flask >= 0.10
 arrow >= 0.12
 configargparse >= 0.13
